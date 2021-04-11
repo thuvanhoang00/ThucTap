@@ -1,36 +1,44 @@
 import Felgo 3.0
 import QtQuick 2.0
 import "./profile"
+import "./cart"
+import "./home"
+import "./search"
+
 App {
     id: root
     property int appWidth: root.width
     property int appHeight: root.height
-    color: "#0000cc"
-
+    color: "#000"
     onInitTheme: {
-        Theme.colors.statusBarStyle = Theme.colors.statusBarStyleWhite
-
-        // Colors customization
-        Theme.colors.backgroundColor = "#666699"
-        Theme.colors.secondaryBackgroundColor = Theme.colors.backgroundColor
-        Theme.colors.tintColor = "#1ed35e"
-        Theme.colors.secondaryTextColor = "#b3b3b3"
-        Theme.colors.textColor = "white"
-
-        // tabBar customization
-        Theme.navigationTabBar.backgroundColor = "#282828"
-        Theme.navigationTabBar.titleOffColor = "#afafaf"
-        Theme.navigationTabBar.titleColor = "#f5f5f5"
-        Theme.navigationTabBar.height = 50
-        Theme.navigationTabBar.dividerColor = "transparent"
-
-        // navigationBar customization
-        Theme.navigationBar.backgroundColor = "#282828"
-        Theme.navigationBar.titleColor = "white"
-        Theme.navigationBar.itemColor = "white"
-        Theme.navigationBar.titleAlignLeft = false
-        Theme.navigationBar.dividerColor = Theme.navigationBar.backgroundColor
+      if (system.desktopPlatform) {
+        Theme.platform = "android"
+      }
     }
+//    onInitTheme: {
+//        Theme.colors.statusBarStyle = Theme.colors.statusBarStyleWhite
+
+//        // Colors customization
+//        Theme.colors.backgroundColor = "#666699"
+//        Theme.colors.secondaryBackgroundColor = Theme.colors.backgroundColor
+//        Theme.colors.tintColor = "#1ed35e"
+//        Theme.colors.secondaryTextColor = "#b3b3b3"
+//        Theme.colors.textColor = "white"
+
+//        // tabBar customization
+//        Theme.navigationTabBar.backgroundColor = "#282828"
+//        Theme.navigationTabBar.titleOffColor = "#afafaf"
+//        Theme.navigationTabBar.titleColor = "#f5f5f5"
+//        Theme.navigationTabBar.height = 50
+//        Theme.navigationTabBar.dividerColor = "transparent"
+
+//        // navigationBar customization
+//        Theme.navigationBar.backgroundColor = "#282828"
+//        Theme.navigationBar.titleColor = "white"
+//        Theme.navigationBar.itemColor = "white"
+//        Theme.navigationBar.titleAlignLeft = false
+//        Theme.navigationBar.dividerColor = Theme.navigationBar.backgroundColor
+//    }
 
     //    Navigation {
     //        id: navigation
@@ -80,11 +88,20 @@ App {
 
         NavigationItem {
             id: userPageItem
-            title: qsTr("Cá nhân")
+            title: qsTr("Tài khoản")
             icon: IconType.user
 
             NavigationStack {
-                initialPage: SignupPage {}
+                id: pf
+                function changeTitle() {
+                    profile.pageTitle = "Tai khoan"
+                }
+                initialPage: MainProfilePage {
+                    id: profile
+                }
+            }
+            onSelected: {
+//                pf.changeTitle()
             }
         }
 

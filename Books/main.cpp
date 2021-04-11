@@ -2,6 +2,9 @@
 #include <FelgoApplication>
 
 #include <QQmlApplicationEngine>
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 // uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 //#include <FelgoLiveClient>
@@ -19,6 +22,17 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     felgo.initialize(&engine);
 
+    QFile file("qml/booksData.txt");
+    if(file.open(QIODevice::ReadOnly)){
+        qDebug() << "ok";
+    }
+    QTextStream in(&file);
+    in.setCodec("UTF-16");
+    QString s = in.readAll();
+    qDebug() << s;
+
+    QJsonDocument doc = QJsonDocument::fromJson(s.toUtf8());
+    qDebug() << doc.toJson(QJsonDocument::Indented);
     // Set an optional license key from project file
     // This does not work if using Felgo Live, only for Felgo Cloud Builds and local builds
     felgo.setLicenseKey(PRODUCT_LICENSE_KEY);

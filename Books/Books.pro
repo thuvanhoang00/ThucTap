@@ -64,5 +64,8 @@ DISTFILES += \
     LibraryPage.qml \
     Logic.qml \
     SearchTermsPage.qml \
+    booksData.json \
     qml/ListBooksPage.qml \
-    qml/ProfilePageMain.qml
+    qml/ProfilePageMain.qml \
+    qml/profile/LoginPage.qml \
+    qml/profile/Login_Signup_Page.qml
