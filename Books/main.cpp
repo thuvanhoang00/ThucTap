@@ -22,17 +22,26 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     felgo.initialize(&engine);
 
-    QFile file("qml/booksData.txt");
+    QFile file("C:/Users/ominet/Desktop/booksData.txt");
     if(file.open(QIODevice::ReadOnly)){
         qDebug() << "ok";
     }
     QTextStream in(&file);
-    in.setCodec("UTF-16");
     QString s = in.readAll();
-    qDebug() << s;
+//    qDebug() << s;
 
-    QJsonDocument doc = QJsonDocument::fromJson(s.toUtf8());
-    qDebug() << doc.toJson(QJsonDocument::Indented);
+    QByteArray ba(s.toUtf8().toStdString().c_str());
+    QJsonDocument doc = QJsonDocument::fromJson(ba);
+
+    // write indented json to file
+    QFile outFile("C:/Users/ominet/Desktop/ret.txt");
+    if(!outFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append))
+        qDebug() << "khong mo dc file";
+
+    QTextStream ss(&outFile);
+    ss << QString::fromUtf8(doc.toJson(QJsonDocument::Indented));
+
+
     // Set an optional license key from project file
     // This does not work if using Felgo Live, only for Felgo Cloud Builds and local builds
     felgo.setLicenseKey(PRODUCT_LICENSE_KEY);

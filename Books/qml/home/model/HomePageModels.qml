@@ -4,7 +4,7 @@ import Felgo 3.0
 Item {
   id: root
 
-  readonly property var dataSource: dataModel.dataSource
+  readonly property var dataSource: bookModel.dataSource
 
   property alias recentlyPlayedModel: recentlyPlayedModel
   property alias madeForYouModel: madeForYouModel
@@ -14,16 +14,6 @@ Item {
 
   JsonListModel {
     id: recentlyPlayedModel
-
-    function prepare() {
-//      var recentlyPlayed = storage.getValue("recentlyPlayed")
-//      recentlyPlayedModel.source = recentlyPlayed === undefined ? [] : recentlyPlayed
-    }
-  }
-
-  JsonListModel {
-      id: bookModel
-      source: "../booksData.txt"
   }
 
   JsonListModel {
@@ -32,7 +22,7 @@ Item {
     function prepare() {
       madeForYouModel.remove(0, madeForYouModel.count)
 
-      var max = 5
+      var max = 100
       var dataSourceCopy = root.dataSource
       dataSourceCopy = shuffle(dataSourceCopy)
 
@@ -42,7 +32,7 @@ Item {
           return
         }
 
-        if (entry.type === "Song") {
+        if (entry.type === "Books") {
           madeForYouModel.append(entry)
         }
       }
@@ -55,7 +45,7 @@ Item {
     function prepare() {
       popularModel.remove(0, popularModel.count)
 
-      var max = 5
+      var max = 50
       var dataSourceCopy = root.dataSource
       dataSourceCopy = shuffle(dataSourceCopy)
 
@@ -65,7 +55,7 @@ Item {
           return
         }
 
-        if (entry.type === "Song") {
+        if (entry.type === "Books") {
           popularModel.append(entry)
         }
       }
@@ -77,11 +67,11 @@ Item {
 
     function prepare() {
       popSongsModel.remove(0, popSongsModel.count)
-
+        var max = 100
       // get all pop songs
       for (const entry of root.dataSource) {
-        if (entry.type === "Song" && entry.tags !== undefined) {
-          if (entry.tags.includes("Pop")) {
+        if (entry.type === "Books" && entry.tags !== undefined) {
+          if (entry.tags.includes("CNTT")) {
             popSongsModel.append(entry)
           }
         }
@@ -97,7 +87,7 @@ Item {
 
       // get all podcasts
       for (const entry of root.dataSource) {
-        if (entry.type === "Podcast") {
+        if (entry.type === "Books") {
           podcastsToTryModel.append(entry)
         }
       }
@@ -125,7 +115,6 @@ Item {
   }
 
   Component.onCompleted: {
-    recentlyPlayedModel.prepare()
     madeForYouModel.prepare()
     popularModel.prepare()
     popSongsModel.prepare()

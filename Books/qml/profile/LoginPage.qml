@@ -1,5 +1,6 @@
 import Felgo 3.0
 import QtQuick 2.6
+import QtGraphicalEffects 1.0
 
 FlickablePage {
     id: root

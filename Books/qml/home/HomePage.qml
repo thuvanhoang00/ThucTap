@@ -12,6 +12,10 @@ Page {
         id: dataModel
     }
 
+    BookModel {
+        id: bookModel
+    }
+
     Rectangle {
         z: 1
         width: parent.width
@@ -26,8 +30,8 @@ Page {
         start: Qt.point(0, 0)
         end: Qt.point(root.width * 0.2, root.width * 0.7)
         gradient: Gradient {
-            GradientStop { position: 0.0; color: "#197dff" }
-            GradientStop { position: 0.7; color: "#197dff" }
+            GradientStop { position: 0.0; color: "#ffbf80" }
+            GradientStop { position: 0.7; color: "#ffbf80" }
         }
     }
 
@@ -102,7 +106,7 @@ Page {
                     font.bold: true
                     fontSize: 24
                     leftPadding: dp(Theme.contentPadding)
-                    text: "Made for you"
+                    text: "Dành riêng cho bạn"
                 }
 
                 AppFlickable {
@@ -142,7 +146,7 @@ Page {
                     font.bold: true
                     fontSize: 24
                     leftPadding: dp(Theme.contentPadding)
-                    text: "Popular"
+                    text: "Tất cả sách"
                 }
 
 
@@ -183,7 +187,7 @@ Page {
                     font.bold: true
                     fontSize: 24
                     leftPadding: dp(Theme.contentPadding)
-                    text: "Pop songs"
+                    text: "Sách Công nghệ thông tin"
                 }
 
                 AppFlickable {

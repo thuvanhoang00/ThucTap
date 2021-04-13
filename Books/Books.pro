@@ -67,5 +67,6 @@ DISTFILES += \
     booksData.json \
     qml/ListBooksPage.qml \
     qml/ProfilePageMain.qml \
+    qml/home/model/BookModel.qml \
     qml/profile/LoginPage.qml \
     qml/profile/Login_Signup_Page.qml
