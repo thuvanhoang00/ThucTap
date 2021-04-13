@@ -10,12 +10,8 @@ Page {
     property string pageTitle: "Tài khoản"
     title: root.pageTitle
 
-<<<<<<< HEAD
     signal loginOK()
     signal logOutOK()
-
-=======
->>>>>>> 0f65f9e8d222c7e6f5194cc4f8119544810e70f5
     LinearGradient {
         anchors.fill: parent
 
