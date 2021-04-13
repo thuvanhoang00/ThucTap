@@ -7,6 +7,25 @@ import "./model"
 Page {
     id: root
     title: "Trang chủ"
+    property bool isLogged: false
+    property string userName: ""
+    property string role: ""
+    rightBarItem:   TextButtonBarItem{
+        width: dp(100)
+        AppText{
+            id: userName
+            anchors.left: parent.left
+            fontSize: dp(12)
+            text: root.userName
+        }
+        AppText {
+            id: role
+            anchors.top: userName.bottom
+            fontSize: dp(7)
+            text: "(" + root.role +")"
+        }
+        visible: root.isLogged
+    }
 
     DataModel {
         id: dataModel

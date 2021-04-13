@@ -15,61 +15,9 @@ App {
         Theme.platform = "android"
       }
     }
-//    onInitTheme: {
-//        Theme.colors.statusBarStyle = Theme.colors.statusBarStyleWhite
-
-//        // Colors customization
-//        Theme.colors.backgroundColor = "#666699"
-//        Theme.colors.secondaryBackgroundColor = Theme.colors.backgroundColor
-//        Theme.colors.tintColor = "#1ed35e"
-//        Theme.colors.secondaryTextColor = "#b3b3b3"
-//        Theme.colors.textColor = "white"
-
-//        // tabBar customization
-//        Theme.navigationTabBar.backgroundColor = "#282828"
-//        Theme.navigationTabBar.titleOffColor = "#afafaf"
-//        Theme.navigationTabBar.titleColor = "#f5f5f5"
-//        Theme.navigationTabBar.height = 50
-//        Theme.navigationTabBar.dividerColor = "transparent"
-
-//        // navigationBar customization
-//        Theme.navigationBar.backgroundColor = "#282828"
-//        Theme.navigationBar.titleColor = "white"
-//        Theme.navigationBar.itemColor = "white"
-//        Theme.navigationBar.titleAlignLeft = false
-//        Theme.navigationBar.dividerColor = Theme.navigationBar.backgroundColor
-//    }
-
-    //    Navigation {
-    //        id: navigation
-    //        enabled: true
-    //        // only enable if user is logged in
-
-    //        // first tab
-    //        NavigationItem{
-    //            title: qsTr("Danh mục sản phẩm")
-    //            icon: IconType.list
-
-    //            NavigationStack {
-    //                id: stack
-    //                splitView: tablet // use side-by-side view on tablet
-    //                initialPage: ListBooksPage{}
-    //                Component.onCompleted: {
-    //                    console.log("width - height: " + root.width + " " + root.height)
-    //                }
-    //            }
-    //        }
-
-    //        // second tab
-    //        NavigationItem {
-    //            title: qsTr("Thông tin tài khoản")
-    //            icon: IconType.users
-
-    //            NavigationStack {
-
-    //            }
-    //        }
-    //    }
+    property bool isLogged: false
+    property string userName: ""
+    property string role: ""
 
     Navigation {
         id: navigation
@@ -94,7 +42,7 @@ App {
             NavigationStack {
                 id: pf
                 function changeTitle() {
-                    profile.pageTitle = "Tai khoan"
+                    profile.pageTitle = "Tài khoản"
                 }
                 initialPage: MainProfilePage {
                     id: profile

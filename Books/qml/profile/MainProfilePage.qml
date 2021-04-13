@@ -10,6 +10,12 @@ Page {
     property string pageTitle: "Tài khoản"
     title: root.pageTitle
 
+<<<<<<< HEAD
+    signal loginOK()
+    signal logOutOK()
+
+=======
+>>>>>>> 0f65f9e8d222c7e6f5194cc4f8119544810e70f5
     LinearGradient {
         anchors.fill: parent
 
@@ -29,15 +35,12 @@ Page {
         visible: false
         onLogOut: {
             console.log("Logout successful!")
-            tab.logOutOK()
+            root.logOutOK()
         }
     }
 
     Navigation {
         id: tab
-        signal loginOK()
-        signal logOutOK()
-
 
         NavigationItem {
             id: login
@@ -47,7 +50,7 @@ Page {
             LoginPage {
                 id: logPage
                 onLoginSucceeded: {
-                    tab.loginOK()
+                    root.loginOK()
                     console.log("Login successful!")
                 }
             }
@@ -69,23 +72,40 @@ Page {
             }
         }
 
-        onLoginOK: {
-            login.showItem = false
-            register.showItem = false
-            thongtinCaNhan.visible = true
-            tab.visible = false
-            // Dang Nhap thanh cong => show loading
-            console.log("an cac tab")
-        }
+//        onLoginOK: {
+//            login.showItem = false
+//            register.showItem = false
+//            thongtinCaNhan.visible = true
+//            tab.visible = false
+//            // Dang Nhap thanh cong => show loading
+//            console.log("an cac tab")
+//        }
 
-        onLogOutOK: {
-            login.showItem = true
-            register.showItem = true
-            thongtinCaNhan.visible = false
-            tab.visible = true
-            // Dang Nhap thanh cong => show loading
-            console.log("hien cac tab")
-        }
+//        onLogOutOK: {
+//            login.showItem = true
+//            register.showItem = true
+//            thongtinCaNhan.visible = false
+//            tab.visible = true
+//            // Dang Nhap thanh cong => show loading
+//            console.log("hien cac tab")
+//        }
+    }
+    onLoginOK: {
+        login.showItem = false
+        register.showItem = false
+        thongtinCaNhan.visible = true
+        tab.visible = false
+        // Dang Nhap thanh cong => show loading
+        console.log("an cac tab")
+    }
+
+    onLogOutOK: {
+        login.showItem = true
+        register.showItem = true
+        thongtinCaNhan.visible = false
+        tab.visible = true
+        // Dang Nhap thanh cong => show loading
+        console.log("hien cac tab")
     }
 
 }
