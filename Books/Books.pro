@@ -1,5 +1,6 @@
 # allows to add DEPLOYMENTFOLDERS and links to the Felgo library and QtCreator auto-completion
 CONFIG += felgo
+CONFIG += c++14
 
 # uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 # for the remaining steps to build a custom Live Code Reload app see here: https://felgo.com/custom-code-reload-app/
@@ -38,8 +39,16 @@ DEPLOYMENTFOLDERS += assetsFolder
 
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp
+SOURCES += source/main.cpp \
+            source/user/database/databasecontroller.cpp \
+            source/user/model/user.cpp \
+            source/user/view/userview.cpp \
+            source/user/controller/usercontroller.cpp \
 
+HEADERS += header/user/model/user.h \
+            header/user/database/databasecontroller.h \
+            header/user/view/userview.h \
+            header/user/controller/usercontroller.h \
 
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

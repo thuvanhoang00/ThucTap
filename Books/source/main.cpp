@@ -1,18 +1,17 @@
 #include <QApplication>
 #include <FelgoApplication>
-
 #include <QQmlApplicationEngine>
-#include <QFile>
-#include <QJsonDocument>
-#include <QJsonObject>
+#include <QQmlContext>
+#include "header/user/view/userview.h"
 
 // uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
-//#include <FelgoLiveClient>
+#include <FelgoLiveClient>
 
 int main(int argc, char *argv[])
 {
-
     QApplication app(argc, argv);
+
+    /****************************************************************************************/
 
     FelgoApplication felgo;
 
@@ -21,26 +20,6 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     felgo.initialize(&engine);
-
-    QFile file("C:/Users/ominet/Desktop/booksData.txt");
-    if(file.open(QIODevice::ReadOnly)){
-        qDebug() << "ok";
-    }
-    QTextStream in(&file);
-    QString s = in.readAll();
-//    qDebug() << s;
-
-    QByteArray ba(s.toUtf8().toStdString().c_str());
-    QJsonDocument doc = QJsonDocument::fromJson(ba);
-
-    // write indented json to file
-    QFile outFile("C:/Users/ominet/Desktop/ret.txt");
-    if(!outFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append))
-        qDebug() << "khong mo dc file";
-
-    QTextStream ss(&outFile);
-    ss << QString::fromUtf8(doc.toJson(QJsonDocument::Indented));
-
 
     // Set an optional license key from project file
     // This does not work if using Felgo Live, only for Felgo Cloud Builds and local builds
@@ -56,11 +35,16 @@ int main(int argc, char *argv[])
     // also see the .pro file for more details
     //felgo.setMainQmlFileName(QStringLiteral("qrc:/qml/Main.qml"));
 
+    /****************************************************************************************/
+
+    UserView userview;
+    engine.rootContext()->setContextProperty("UserView", &userview);
     engine.load(QUrl(felgo.mainQmlFileName()));
+
 
     // to start your project as Live Client, comment (remove) the lines "felgo.setMainQmlFileName ..." & "engine.load ...",
     // and uncomment the line below
-    //FelgoLiveClient client (&engine);
+//    FelgoLiveClient client (&engine);
 
     return app.exec();
 }

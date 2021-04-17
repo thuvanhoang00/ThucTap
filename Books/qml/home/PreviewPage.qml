@@ -2,7 +2,6 @@ import Felgo 3.0
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
 
-
 Page {
     id: root
 
@@ -10,47 +9,10 @@ Page {
     property var modelEntry: undefined
 
     backNavigationEnabled: true
-    rightBarItem: TextButtonBarItem {
-        id: buttonThemGioHang
-        text: "Thêm vào giỏ hàng"
 
-        onClicked: {
-            if (root.isFavorite) {
-                dataModel.removeFromFavorites(root.modelEntry)
-            } else {
-                dataModel.addToFavorites(root.modelEntry)
-            }
-
-            root.isFavorite = dataModel.isFavorite(root.modelEntry)
-            logic.favoritesChanged(root.modelEntry["name"])
-        }
-
-        Connections {
-            target: logic
-
-            onFavoritesChanged: {
-                if (favorite === root.modelEntry["name"]) {
-                    root.isFavorite = dataModel.isFavorite(root.modelEntry)
-                }
-            }
-        }
-        //        Rectangle {
-        //            id: themGioHangBG
-        //            width: dp(50)
-        //            height: dp(50)
-        //            color: "transparent"
-        //            anchors.right: buttonThemGioHang.left
-        //            anchors.top: buttonThemGioHang.top
-        //            anchors.bottom: buttonThemGioHang.bottom
-
-        //            AppText{
-        //                id: themGioHangText
-        //                text: "Thêm vào giỏ hàng"
-        //                anchors.fill: parent
-        //                fontSize: dp(10)
-        //            }
-        //        }
-
+    rightBarItem: IconButtonBarItem{
+        icon: IconType.cartplus
+        iconSize: dp(35)
     }
 
     title: modelEntry.name

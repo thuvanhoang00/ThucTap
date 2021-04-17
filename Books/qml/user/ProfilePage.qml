@@ -6,8 +6,8 @@ Page{
     id: root
     signal logOut()
     ListPage {
-        id: page
-        title: "Jira Issues"
+        id: userProfileDetailPage
+        title: "userProfileDetail"
         model: dataModel.filteredIssuesModel
 
         delegate: SimpleRow {
@@ -15,15 +15,15 @@ Page{
             text: model.title
             detailText: model.label
             badgeValue: dataModel.getStatus(model.status)
-            badgeColor: dataModel.getStatusColor(model.status)
+            badgeColor: "#172B4D"
             onSelected: {
-                page.navigationStack.push(worklogDetailPageComponent, {issue: model})
+                userProfileDetailPage.navigationStack.push(worklogDetailPageComponent, {issue: model})
             }
         }
         Component {
             id: worklogDetailPageComponent
             WorklogDetailPage {
-
+                rowTitle: dataModel.title
             }
         }
 
@@ -31,9 +31,10 @@ Page{
     AppButton {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 50
+        anchors.bottomMargin: dp(50)
         text: qsTr("Đăng Xuất")
         onClicked: {
+//            UserView.logout()
             root.logOut()
         }
     }

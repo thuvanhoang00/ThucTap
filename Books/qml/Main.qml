@@ -1,6 +1,6 @@
 import Felgo 3.0
 import QtQuick 2.0
-import "./profile"
+import "./user"
 import "./cart"
 import "./home"
 import "./search"
@@ -42,10 +42,10 @@ App {
             NavigationStack {
                 id: pf
                 function changeTitle() {
-                    profile.pageTitle = "Tài khoản"
+                    user.pageTitle = "Tài khoản"
                 }
-                initialPage: MainProfilePage {
-                    id: profile
+                initialPage: MainUserPage {
+                    id: user
                 }
             }
             onSelected: {

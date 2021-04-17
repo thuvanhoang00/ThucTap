@@ -90,7 +90,7 @@ FlickablePage {
         AppButton {
             anchors.horizontalCenter: parent.horizontalCenter
             enabled: root.allFieldsValid
-            text: qsTr("Xác nhận")
+            text: qsTr("Đăng ký")
         }
     }
     Constants {

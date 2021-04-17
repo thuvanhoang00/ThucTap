@@ -7,22 +7,30 @@ import "./model"
 Page {
     id: root
     title: "Trang chủ"
-    property bool isLogged: false
-    property string userName: ""
+    property bool isLogged: UserView.loginState
+    property string userName: UserView.userName
     property string role: ""
     rightBarItem:   TextButtonBarItem{
-        width: dp(100)
+        width: dp(200)
         AppText{
-            id: userName
-            anchors.left: parent.left
+            id: name
+            anchors.top: parent.top
+            anchors.topMargin: dp(15)
+            anchors.horizontalCenter: parent.horizontalCenter
             fontSize: dp(12)
-            text: root.userName
+            font.bold: true
+            color: "white"
+            text: "Xin chào! " + "root.userNamzzze"
         }
         AppText {
             id: role
-            anchors.top: userName.bottom
-            fontSize: dp(7)
-            text: "(" + root.role +")"
+            anchors.top: name.bottom
+            anchors.topMargin: dp(5)
+            fontSize: dp(10)
+            color: "white"
+            anchors.horizontalCenter: name.horizontalCenter
+            text: "(" + "admin" +")"
+            opacity: 0.6
         }
         visible: root.isLogged
     }
@@ -71,48 +79,9 @@ Page {
 
 
             /***************************
-             *** Cai nay dung de lam
-             *** San pham vua xem
+             ***
+             *** them San pham vua xem
              ***************************/
-//            Column {
-//                id: recentlyPlayedColumn
-
-//                width: parent.width
-//                spacing: dp(20)
-//                visible: homePageModels.recentlyPlayedModel.count > 0
-
-//                AppText {
-//                    font.bold: true
-//                    fontSize: 24
-//                    leftPadding: dp(Theme.contentPadding)
-//                    text: "Recently played"
-//                }
-
-//                AppFlickable {
-//                    width: parent.width
-//                    height: contentHeight
-//                    flickableDirection: Flickable.HorizontalFlick
-//                    contentWidth: recentRow.width
-//                    contentHeight: recentRow.height
-
-//                    Row {
-//                        id: recentRow
-//                        leftPadding: dp(Theme.contentPadding)
-//                        rightPadding: dp(Theme.contentPadding)
-//                        spacing: dp(Theme.contentPadding)
-
-//                        Repeater {
-//                            model: homePageModels.recentlyPlayedModel
-
-//                            HomePageListDelegate {
-//                                onSelected: {
-//                                    root.navigationStack.push(previewPageComponent, {"modelEntry": model})
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
 
             Column {
                 id: madeForYouColumn

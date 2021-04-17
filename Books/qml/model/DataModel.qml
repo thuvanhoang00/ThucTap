@@ -16,10 +16,10 @@ Item {
   property string totalTime: calculateTotalTime()
 
   property var issuesJsonData: [
-    {"id":"11914","title":"Thông tin tài khoản", "label" : "FELGO-851", "status": 3, "imageSrc":"../../assets/icon-jira-issue.png"},
-    {"id":"10095","title":"Lịch sử mua hàng", "label" : "FELGO-19", "status": 0, "imageSrc":"../../assets/icon-jira-story.png"},
-    {"id":"13123","title":"Quản lý đơn hàng", "label" : "FELGO-23", "status": 1, "imageSrc":"../../assets/icon-jira-issue.png"},
-    {"id":"12124","title":"PlaceHolder", "label" : "FELGO-16", "status": 2, "imageSrc":"../../assets/icon-jira-issue.png"}
+    {"id":"11914","title":"Thông tin tài khoản", "imageSrc":"../../assets/icon-jira-issue.png"},
+    {"id":"10095","title":"Lịch sử mua hàng","imageSrc":"../../assets/icon-jira-story.png"},
+    {"id":"13123","title":"Quản lý đơn hàng", "imageSrc":"../../assets/icon-jira-issue.png"},
+    {"id":"12124","title":"PlaceHolder", "imageSrc":"../../assets/icon-jira-issue.png"}
   ]
 
   property var statusHelper: [
