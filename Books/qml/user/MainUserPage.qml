@@ -71,7 +71,7 @@ Page {
         console.log("hien cac tab")
     }
 
-    ProfilePage {
+    ProfileInfoPage {
         id: thongtinCaNhan
         visible: false
         onLogOut: {

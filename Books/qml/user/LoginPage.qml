@@ -50,17 +50,13 @@ FlickablePage {
             onClicked: {
                 var name = nameField.textField.text
                 var password = passwordField.textField.text
-//                UserView.login(name, password)
-//                if(UserView.loginState == true){
-//                    loginSucceeded()
-//                }
-//                else{
-//                    loginFailed()
-//                }
-
-                /************************************/
-                loginSucceeded()
-                /************************************/
+                UserView.login(name, password)
+                if(UserView.loginState == true){
+                    loginSucceeded()
+                }
+                else{
+                    loginFailed()
+                }
             }
         }
     }

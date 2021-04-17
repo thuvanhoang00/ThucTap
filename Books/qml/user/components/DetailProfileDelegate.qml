@@ -32,6 +32,7 @@ Page {
         TextFieldRow {
             id: username
             textItem.text: "Tên tài khoản"
+            textFieldItem.text: "hoangvanthu"
             clickEnabled: true
             labelWidth: dp(140)
         }

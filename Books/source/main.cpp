@@ -3,6 +3,10 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "header/user/view/userview.h"
+#include "header/user/database/databasecontroller.h"
+#include <QFile>
+#include <QDir>
+#include "header/user/controller/usercontroller.h"
 
 // uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 #include <FelgoLiveClient>
@@ -10,7 +14,10 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-
+//    DatabaseController::getInstance()->processLogin("hoangvanthu", "123456");
+//    if(m_db.open()){
+//        qDebug()<< app.applicationFilePath();
+//    }
     /****************************************************************************************/
 
     FelgoApplication felgo;
@@ -40,7 +47,6 @@ int main(int argc, char *argv[])
     UserView userview;
     engine.rootContext()->setContextProperty("UserView", &userview);
     engine.load(QUrl(felgo.mainQmlFileName()));
-
 
     // to start your project as Live Client, comment (remove) the lines "felgo.setMainQmlFileName ..." & "engine.load ...",
     // and uncomment the line below

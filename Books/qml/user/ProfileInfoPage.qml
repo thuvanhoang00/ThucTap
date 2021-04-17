@@ -1,7 +1,7 @@
 import Felgo 3.0
 import QtQuick 2.0
 import "../model"
-import "../components"
+import "./components"
 Page{
     id: root
     signal logOut()
@@ -11,18 +11,16 @@ Page{
         model: dataModel.filteredIssuesModel
 
         delegate: SimpleRow {
-            imageSource: Qt.resolvedUrl(model.imageSrc)
+            imageSource: "http://simpleicon.com/wp-content/uploads/user1.svg"
             text: model.title
             detailText: model.label
-            badgeValue: dataModel.getStatus(model.status)
-            badgeColor: "#172B4D"
             onSelected: {
-                userProfileDetailPage.navigationStack.push(worklogDetailPageComponent, {issue: model})
+                userProfileDetailPage.navigationStack.push(detailDelegateComponent, {issue: model})
             }
         }
         Component {
-            id: worklogDetailPageComponent
-            WorklogDetailPage {
+            id: detailDelegateComponent
+            DetailProfileDelegate {
                 rowTitle: dataModel.title
             }
         }
@@ -34,7 +32,7 @@ Page{
         anchors.bottomMargin: dp(50)
         text: qsTr("Đăng Xuất")
         onClicked: {
-//            UserView.logout()
+            UserView.logout()
             root.logOut()
         }
     }

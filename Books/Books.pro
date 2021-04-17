@@ -1,6 +1,7 @@
 # allows to add DEPLOYMENTFOLDERS and links to the Felgo library and QtCreator auto-completion
 CONFIG += felgo
 CONFIG += c++14
+QT += sql
 
 # uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 # for the remaining steps to build a custom Live Code Reload app see here: https://felgo.com/custom-code-reload-app/
@@ -50,6 +51,8 @@ HEADERS += header/user/model/user.h \
             header/user/view/userview.h \
             header/user/controller/usercontroller.h \
 
+RESOURCES += resources.qrc
+
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
     OTHER_FILES += android/AndroidManifest.xml       android/build.gradle
@@ -67,15 +70,18 @@ win32 {
 macx {
     ICON = macx/app_icon.icns
 }
+#OTHER_FILES += $$PWD/Database/user.db
 
-DISTFILES += \
-    HomePage.qml \
-    LibraryPage.qml \
-    Logic.qml \
-    SearchTermsPage.qml \
-    booksData.json \
-    qml/ListBooksPage.qml \
-    qml/ProfilePageMain.qml \
-    qml/home/model/BookModel.qml \
-    qml/profile/LoginPage.qml \
-    qml/profile/Login_Signup_Page.qml
+#DISTFILES += \
+#    Database/user.db \
+#    HomePage.qml \
+#    LibraryPage.qml \
+#    Logic.qml \
+#    SearchTermsPage.qml \
+#    booksData.json \
+#    images/user_icon_004.jpg \
+#    qml/ListBooksPage.qml \
+#    qml/ProfilePageMain.qml \
+#    qml/home/model/BookModel.qml \
+#    qml/profile/LoginPage.qml \
+#    qml/profile/Login_Signup_Page.qml

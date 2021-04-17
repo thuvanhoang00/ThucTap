@@ -9,7 +9,7 @@ Page {
     title: "Trang chủ"
     property bool isLogged: UserView.loginState
     property string userName: UserView.userName
-    property string role: ""
+    property string role: UserView.userRole
     rightBarItem:   TextButtonBarItem{
         width: dp(200)
         AppText{
@@ -20,7 +20,7 @@ Page {
             fontSize: dp(12)
             font.bold: true
             color: "white"
-            text: "Xin chào! " + "root.userNamzzze"
+            text: "Xin chào! " + userName
         }
         AppText {
             id: role
@@ -29,7 +29,7 @@ Page {
             fontSize: dp(10)
             color: "white"
             anchors.horizontalCenter: name.horizontalCenter
-            text: "(" + "admin" +")"
+            text: "(" + root.role +")"
             opacity: 0.6
         }
         visible: root.isLogged
