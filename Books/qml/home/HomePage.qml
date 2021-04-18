@@ -94,7 +94,7 @@ Page {
                     font.bold: true
                     fontSize: 24
                     leftPadding: dp(Theme.contentPadding)
-                    text: "Dành riêng cho bạn"
+                    text: "Giảm giá mạnh!"
                 }
 
                 AppFlickable {
@@ -165,11 +165,11 @@ Page {
             }
             /*-------------------------------------------------------------------------------------------------------------------------*/
             Column {
-                id: popSongsColumn
+                id: it
 
                 width: parent.width
                 spacing: dp(20)
-                visible: homePageModels.popSongsModel.count > 0
+                visible: homePageModels.itBookModel.count > 0
 
                 AppText {
                     font.bold: true
@@ -182,17 +182,17 @@ Page {
                     width: parent.width
                     height: contentHeight
                     flickableDirection: Flickable.HorizontalFlick
-                    contentWidth: popSongsRow.width
-                    contentHeight: popSongsRow.height
+                    contentWidth: itBookRow.width
+                    contentHeight: itBookRow.height
 
                     Row {
-                        id: popSongsRow
+                        id: itBookRow
                         leftPadding: dp(Theme.contentPadding)
                         rightPadding: dp(Theme.contentPadding)
                         spacing: dp(Theme.contentPadding)
 
                         Repeater {
-                            model: homePageModels.popSongsModel
+                            model: homePageModels.itBookModel
 
                             HomePageListDelegate {
                                 onSelected: {
@@ -205,11 +205,11 @@ Page {
             }
             /*-------------------------------------------------------------------------------------------------------------------------*/
             Column {
-                id: podcastsToTry
+                id: literality
 
                 width: parent.width
                 spacing: dp(20)
-                visible: homePageModels.podcastsToTryModel.count > 0
+                visible: homePageModels.literalityBookModel.count > 0
 
                 AppText {
                     font.bold: true
@@ -223,17 +223,17 @@ Page {
                     width: parent.width
                     height: contentHeight
                     flickableDirection: Flickable.HorizontalFlick
-                    contentWidth: podcastsToTryRow.width
-                    contentHeight: podcastsToTryRow.height
+                    contentWidth: literalityRow.width
+                    contentHeight: literalityRow.height
 
                     Row {
-                        id: podcastsToTryRow
+                        id: literalityRow
                         leftPadding: dp(Theme.contentPadding)
                         rightPadding: dp(Theme.contentPadding)
                         spacing: dp(Theme.contentPadding)
 
                         Repeater {
-                            model: homePageModels.podcastsToTryModel
+                            model: homePageModels.literalityBookModel
 
                             HomePageListDelegate {
                                 onSelected: {

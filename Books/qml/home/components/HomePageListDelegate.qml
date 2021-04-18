@@ -8,7 +8,7 @@ Item {
 
     width: dp(120)
     height: dp(150)
-
+    clip: true
     AppImage {
         id: coverImage
         width: parent.width
@@ -31,6 +31,29 @@ Item {
         //    font.bold: true
         fontSize: 10
         text: model.title
+    }
+    // Hiển thị % giá giảm
+    Rectangle {
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.rightMargin: -dp(5)
+        anchors.topMargin: -dp(5)
+        width: dp(30)
+        height: dp(30)
+        color: "#ff9933"
+        radius: 100
+
+        AppText{
+            anchors.centerIn: parent
+            text: {
+                var discountPercentage = Math.floor(model.mainPrice) / Math.floor(model.originalPrice)
+                discountPercentage = discountPercentage*100
+                return "-" + (100-Math.floor(discountPercentage)) + "%"
+            }
+            fontSize: dp(7)
+            font.bold: true
+            color: "#cc0000"
+        }
     }
 
     MouseArea {

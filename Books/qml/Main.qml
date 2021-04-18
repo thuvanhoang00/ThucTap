@@ -49,14 +49,13 @@ App {
                 }
             }
             onSelected: {
-//                pf.changeTitle()
             }
         }
 
         // Admin: thống kê, Users: sales
         NavigationItem {
             id: customPageItem
-            title: qsTr("Sales")
+            title: qsTr("Tùy chọn")
             icon: IconType.yelp
         }
 
@@ -77,6 +76,7 @@ App {
             }
         }
 
+
         NavigationItem {
             id: libraryPageItem
             title: qsTr("Giỏ hàng")
@@ -87,5 +87,9 @@ App {
             }
         }
     }
+    Component {
+      id: searchPageComponent
 
+      SearchPage { }
+    }
 }

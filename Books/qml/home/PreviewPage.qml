@@ -15,9 +15,6 @@ Page {
         iconSize: dp(35)
     }
 
-    title: modelEntry.name
-
-
     LinearGradient {
         id: bgColor
         anchors.fill: parent
@@ -33,7 +30,7 @@ Page {
     AppFlickable {
         anchors {
             fill: parent
-            bottomMargin: actuallyPlayingOverlay.visible ? actuallyPlayingOverlay.height : 0
+            bottomMargin: 0
         }
 
         contentHeight: contentColumn.height + contentColumn.anchors.topMargin
@@ -57,43 +54,57 @@ Page {
 
                 source: Qt.resolvedUrl(dataModel.getCover(modelEntry))
             }
+            Rectangle {
+                id: ratingBG
+                height: dp(10)
+                width: dp(200)
+                anchors.left: parent.left
+                anchors.leftMargin: dp(20)
+                color: "transparent"
+                AppText{
+                    id: txt1
+                    text: "Rating: "
+                    font.pixelSize: sp(12)
+                    font.italic: true
+                    color: "#ff3300"
+                }
 
+                AppText{
+                    id: txt2
+                    anchors.left: txt1.right
+                    anchors.leftMargin: dp(5)
+                    text: modelEntry.rating + "/5"
+                    font.pixelSize: sp(12)
+                    font.italic: true
+                    color: "#ff3300"
+                }
+
+                AppText {
+                    id: txt3
+                    anchors.left: txt2.right
+                    anchors.leftMargin: dp(3)
+                    text: "("+modelEntry.ratingCount+")"
+                    font.pixelSize: sp(12)
+                    font.italic: true
+                    color: "#ff3300"
+                }
+            }
             AppText {
                 id: bookTitle
-                anchors.horizontalCenter: parent.horizontalCenter
-
+                anchors.left: parent.left
+                anchors.leftMargin: dp(20)
                 font {
                     bold: true
                     pixelSize: sp(15)
                 }
-                width: dp(200)
+                width: dp(300)
                 maximumLineCount: 2
                 wrapMode: Text.Wrap
                 elide: AppText.ElideRight
                 text: modelEntry.title
             }
 
-            NumberAnimation {
-                id: textAnimation
-                running: true
-                target: bookTitle
-                property: "x"
-                from: 0
-                to: -1000
-                duration: 1000
-            }
 
-            Rectangle {
-                id: ratingBG
-                height: dp(20)
-                width: dp(200)
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                AppText{
-                    id: star
-                    text: "Hiển thị số đánh giá"
-                }
-            }
 
             Rectangle {
                 id: priceBG
@@ -102,41 +113,43 @@ Page {
                 color: "transparent"
                 anchors.horizontalCenter: parent.horizontalCenter
 
-
+                // giá bán
                 AppText {
                     id: mainPrice
-                    anchors.left: bookTitle.left
+                    anchors.left: priceBG.left
+                    anchors.leftMargin: dp(10)
                     width: AppText.width
-                    //                    horizontalAlignment: AppText.AlignHCenter
+                    anchors.verticalCenter: parent.verticalCenter
                     verticalAlignment: AppText.AlignVCenter
-                    color: Theme.textColor
+//                    color: Theme.textColor
                     font.bold: true
                     text: {
                         return modelEntry.mainPrice + " đ"
                     }
                 }
-
+                // giá gốc
                 AppText {
                     id: originalPrice
                     width: AppText.width
-                    //                    horizontalAlignment: AppText.AlignHCenter
-                    verticalAlignment: AppText.AlignVCenter
+                    anchors.verticalCenter: parent.verticalCenter
                     anchors.left: mainPrice.right
-                    anchors.leftMargin: dp(15)
+                    anchors.leftMargin: dp(10)
+                    anchors.bottom: parent.bottom
                     color: Theme.textColor
                     fontSize: mainPrice.fontSize/1.5
+                    font.strikeout: true
                     text: {
                         return modelEntry.originalPrice + " đ"
                     }
                 }
-
+                // % giảm giá
                 AppText{
                     id: discount
                     width: AppText.width
-                    //                    horizontalAlignment: AppText.AlignHCenter
+                    anchors.verticalCenter: parent.verticalCenter
                     verticalAlignment: AppText.AlignVCenter
                     anchors.left: originalPrice.right
-                    anchors.leftMargin: dp(20)
+                    anchors.leftMargin: dp(10)
                     font.bold: true
                     fontSize: mainPrice.fontSize/1.2
                     text: {
@@ -144,6 +157,7 @@ Page {
                         discountPercentage = discountPercentage*100
                         return "(-" + (100-Math.floor(discountPercentage)) + " %)"
                     }
+                    color: "#e60000"
                 }
             }
 
@@ -164,8 +178,6 @@ Page {
                 textSize: sp(15)
 
                 onClicked: {
-                    soundManager.shufflePlay(root.modelEntry)
-                    actuallyPlayingModal.open()
                 }
             }
         }

@@ -7,10 +7,10 @@ Item {
     readonly property var dataSource: bookModel.dataSource
 
     property alias recentlyPlayedModel: recentlyPlayedModel
-    property alias madeForYouModel: madeForYouModel
-    property alias popularModel: popularModel
-    property alias popSongsModel: popSongsModel
-    property alias podcastsToTryModel: podcastsToTryModel
+    property alias madeForYouModel: madeForYouModel // Sách có % giảm giá cao nhất
+    property alias popularModel: popularModel       // tất cả sách
+    property alias itBookModel: itBookModel
+    property alias literalityBookModel: literalityBookModel
     property alias economicBookModel: economicBookModel
     property alias historyBookModel: historyBookModel
     property alias kidsBookModel: kidsBookModel
@@ -27,9 +27,9 @@ Item {
         function prepare() {
             madeForYouModel.remove(0, madeForYouModel.count)
 
-            var max = 100
+            var max = 20
             var dataSourceCopy = root.dataSource
-            dataSourceCopy = shuffle(dataSourceCopy)
+            dataSourceCopy = getTopDiscountBook(dataSourceCopy)
 
             // get first five randomized songs
             for (const entry of dataSourceCopy) {
@@ -70,16 +70,16 @@ Item {
 
     // sách CNTT
     JsonListModel {
-        id: popSongsModel
+        id: itBookModel
 
         function prepare() {
-            popSongsModel.remove(0, popSongsModel.count)
+            itBookModel.remove(0, itBookModel.count)
             var max = 100
             // get all pop songs
             for (const entry of root.dataSource) {
                 if (entry.type === "Books" && entry.tags !== undefined) {
                     if (entry.tags.includes("CNTT")) {
-                        popSongsModel.append(entry)
+                        itBookModel.append(entry)
                     }
                 }
             }
@@ -88,10 +88,10 @@ Item {
 
     // sách Văn học
     JsonListModel {
-        id: podcastsToTryModel
+        id: literalityBookModel
 
         function prepare() {
-            podcastsToTryModel.remove(0, podcastsToTryModel.count)
+            literalityBookModel.remove(0, literalityBookModel.count)
 
             // get all novel books
             var dataSourceCopy = root.dataSource
@@ -99,7 +99,7 @@ Item {
             for (const entry of dataSourceCopy) {
                 if (entry.type === "Books" && entry.tags !== undefined) {
                     if (entry.tags.includes("Vanhoc")){
-                        podcastsToTryModel.append(entry)
+                        literalityBookModel.append(entry)
                     }
                 }
             }
@@ -220,11 +220,23 @@ Item {
         return array;
     }
 
+    // Lấy 20 quyển sách giảm giá mạnh nhất
+
+    function getTopDiscountBook(array){
+        var length = array.length
+        array.sort(function compareFunction(a, b){
+            var temp1 = Math.floor(a.mainPrice) / Math.floor(a.originalPrice)
+            var temp2 = Math.floor(b.mainPrice) / Math.floor(b.originalPrice)
+            return temp1-temp2;
+        });
+        return array
+    }
+
     Component.onCompleted: {
         madeForYouModel.prepare()
         popularModel.prepare()
-        popSongsModel.prepare()
-        podcastsToTryModel.prepare()
+        itBookModel.prepare()
+        literalityBookModel.prepare()
         economicBookModel.prepare()
         historyBookModel.prepare()
         kidsBookModel.prepare()
