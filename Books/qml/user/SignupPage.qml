@@ -91,6 +91,9 @@ FlickablePage {
             anchors.horizontalCenter: parent.horizontalCenter
             enabled: root.allFieldsValid
             text: qsTr("Đăng ký")
+            onClicked: {
+                UserView.userRegister(nameField.textField.text, emailField.textField.text, "999999", passwordField.textField.text)
+            }
         }
     }
     Constants {

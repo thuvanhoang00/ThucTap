@@ -92,4 +92,14 @@ App {
 
       SearchPage { }
     }
+
+    Component {
+      id: previewPageComponent
+
+      PreviewPage { }
+    }
+
+    BookModel {
+        id: bookModel
+    }
 }

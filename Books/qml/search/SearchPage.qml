@@ -21,7 +21,7 @@ Page {
 
     onPushed: {
         if (searchTerm != "") {
-            dataModel.buildModelUponSearch(searchTerm)
+            bookModel.buildModelUponSearch(searchTerm)
         } else {
             searchBar.textField.forceActiveFocus()
         }
@@ -45,7 +45,12 @@ Page {
                 Behavior on width {NumberAnimation{duration: 150; easing.type: Easing.InOutQuad}}
 
                 textField.onDisplayTextChanged: {
-                    dataModel.buildModelUponSearch(textField.displayText)
+//                    console.log("dang tim kiem: " + textField.displayText)
+//                    bookModel.buildModelUponSearch(textField.displayText)
+                }
+                onAccepted: {
+                    console.log("dang tim kiem: " + textField.displayText)
+                    bookModel.buildModelUponSearch(textField.displayText)
                 }
             }
 
@@ -75,7 +80,7 @@ Page {
 
         anchors {
             fill: parent
-            bottomMargin: actuallyPlayingOverlay.visible ? actuallyPlayingOverlay.height : 0
+            bottomMargin: 0
         }
 
         emptyView.children: [
@@ -105,7 +110,7 @@ Page {
             }
         ]
 
-        model: dataModel
+        model: bookModel
 
         delegate: SearchPageRow {
 

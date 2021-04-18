@@ -16,28 +16,7 @@ SimpleRow {
     dividerHeight: 0
   }
 
-  text: model.name
-  detailText: {
-    if (model.type === "Song" || model.type === "Podcast") {
-
-      var author = ""
-      if (model.album !== "" && model.album !== undefined) {
-        author =  dataModel.findAndGetFieldValue(model.album, "author")
-      } else if (model.author !== "" && model.author !== undefined) {
-        author = model.author
-      }
-
-      if (author !== "") {
-        return model.type + " • " + author
-      }
-
-      if (model.tags.length > 0) {
-        return model.type + " • " + model.tags[0]
-      }
-    }
-
-    return model.type
-  }
-
-  imageSource: Qt.resolvedUrl(dataModel.getCover(model))
+  text: model.title
+  imageSource: model.image
+  imageMaxSize: 1000
 }

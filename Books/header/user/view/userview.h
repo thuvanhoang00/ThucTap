@@ -24,6 +24,7 @@ public:
     QString getUserRole() const;
     void setUserRole(QString role);
 
+    Q_INVOKABLE void userRegister(QString name, QString email, QString phone, QString password);
     Q_INVOKABLE void login(QString name, QString password);
     Q_INVOKABLE void logout();
 signals:

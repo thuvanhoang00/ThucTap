@@ -48,6 +48,12 @@ void UserView::setUserRole(QString role)
     }
 }
 
+void UserView::userRegister(QString name, QString email, QString phone, QString password)
+{
+    qDebug() << QString("%1 %2 %3 %4 %5").arg(Q_FUNC_INFO).arg(name).arg(email).arg(phone).arg(password);
+
+}
+
 void UserView::login(QString name, QString password)
 {
     qDebug() << QString("%1 %2 %3").arg(Q_FUNC_INFO).arg(name).arg(password);

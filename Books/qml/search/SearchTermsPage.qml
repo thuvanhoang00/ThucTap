@@ -27,7 +27,7 @@ Page {
 
     anchors.fill: parent
     anchors.topMargin: Theme.statusBarHeight
-    anchors.bottomMargin: actuallyPlayingOverlay.visible ? actuallyPlayingOverlay.height : 0
+    anchors.bottomMargin: 0
     contentHeight: column.height
     contentWidth: parent.width
 
