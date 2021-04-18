@@ -2,11 +2,12 @@
 #include <FelgoApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include "header/user/view/userview.h"
-#include "header/user/database/databasecontroller.h"
 #include <QFile>
 #include <QDir>
+#include "header/user/view/userview.h"
+#include "header/user/database/databasecontroller.h"
 #include "header/user/controller/usercontroller.h"
+#include "header/projectpath/projectpath.h"
 
 // uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 #include <FelgoLiveClient>
@@ -14,10 +15,7 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-//    DatabaseController::getInstance()->processLogin("hoangvanthu", "123456");
-//    if(m_db.open()){
-//        qDebug()<< app.applicationFilePath();
-//    }
+    qDebug() << PROJECT_PATH;
     /****************************************************************************************/
 
     FelgoApplication felgo;
@@ -45,6 +43,10 @@ int main(int argc, char *argv[])
     /****************************************************************************************/
 
     UserView userview;
+    ProjectPath path;
+    path.setImagePath(QString("%1/%2").arg(PROJECT_PATH).arg("assets/images/"));
+
+    engine.rootContext()->setContextProperty("ProjectPath", &path);
     engine.rootContext()->setContextProperty("UserView", &userview);
     engine.load(QUrl(felgo.mainQmlFileName()));
 

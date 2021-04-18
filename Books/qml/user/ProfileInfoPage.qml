@@ -5,15 +5,16 @@ import "./components"
 Page{
     id: root
     signal logOut()
+    property string imagePath: ProjectPath.imagePath + "usericon.jpg"
     ListPage {
         id: userProfileDetailPage
         title: "userProfileDetail"
         model: dataModel.filteredIssuesModel
 
         delegate: SimpleRow {
-            imageSource: "http://simpleicon.com/wp-content/uploads/user1.svg"
+            imageSource: root.imagePath
             text: model.title
-            detailText: model.label
+//            detailText: model.label
             onSelected: {
                 userProfileDetailPage.navigationStack.push(detailDelegateComponent, {issue: model})
             }
@@ -35,5 +36,8 @@ Page{
             UserView.logout()
             root.logOut()
         }
+    }
+    Component.onCompleted: {
+        console.log("aaaaaaaaaaaaaaaa ------ " + root.imagePath)
     }
 }

@@ -6,6 +6,10 @@ Page {
     id: page
     property string rowTitle: ""
     backNavigationEnabled: true
+    property string username: UserView.userName
+    property string email: "email@gmail.com"
+    property string phone: "0999999999"
+    property string password: "123456"
 
     rightBarItem: TextButtonBarItem {
         text: "Lưu"
@@ -32,7 +36,7 @@ Page {
         TextFieldRow {
             id: username
             textItem.text: "Tên tài khoản"
-            textFieldItem.text: "hoangvanthu"
+            textFieldItem.text: page.username
             clickEnabled: true
             labelWidth: dp(140)
         }
@@ -41,14 +45,14 @@ Page {
             textItem.text: "Email"
             clickEnabled: true
             labelWidth: dp(140)
-
+            textFieldItem.text: page.email
         }
 
         TextFieldRow {
             id: timeSpent
             textItem.text: "Số điện thoại"
             labelWidth: dp(140)
-
+            textFieldItem.text:  page.phone
         }
 
         TextFieldRow {

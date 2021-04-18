@@ -5,8 +5,8 @@ DatabaseController* DatabaseController::instance = nullptr;
 DatabaseController::DatabaseController()
 {
     m_db = QSqlDatabase::addDatabase("QSQLITE");
-    QString path = QCoreApplication::applicationDirPath();
-    path += "/user.db";
+    QString path = PROJECT_PATH;
+    path += "/Database/user.db";
     m_db.setDatabaseName(path);
     qDebug() << path;
     if(!m_db.open()){

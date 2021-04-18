@@ -22,8 +22,9 @@ PRODUCT_LICENSE_KEY = ""
 qmlFolder.source = qml
 DEPLOYMENTFOLDERS += qmlFolder # comment for publishing
 
-assetsFolder.source = assets
-DEPLOYMENTFOLDERS += assetsFolder
+#RESOURCES += resources.qrc
+#assetsFolder.source = assets
+#DEPLOYMENTFOLDERS += assetsFolder
 
 # Add more folders to ship with the application here
 
@@ -40,7 +41,13 @@ DEPLOYMENTFOLDERS += assetsFolder
 
 
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += source/main.cpp \
+
+# Đường dẫn tới thư mục của project
+PRO_FILE_PWD = $$_PRO_FILE_PWD_
+DEFINES += PROJECT_PATH=\"\\\"$${PRO_FILE_PWD}\\\"\"
+
+SOURCES +=  main.cpp \
+			source/projectpath/projectpath.cpp \
             source/user/database/databasecontroller.cpp \
             source/user/model/user.cpp \
             source/user/view/userview.cpp \
@@ -50,8 +57,8 @@ HEADERS += header/user/model/user.h \
             header/user/database/databasecontroller.h \
             header/user/view/userview.h \
             header/user/controller/usercontroller.h \
+			header/projectpath/projectpath.h
 
-RESOURCES += resources.qrc
 
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

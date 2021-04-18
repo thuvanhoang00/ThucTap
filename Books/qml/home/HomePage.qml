@@ -82,7 +82,7 @@ Page {
              ***
              *** them San pham vua xem
              ***************************/
-
+            /*-------------------------------------------------------------------------------------------------------------------------*/
             Column {
                 id: madeForYouColumn
 
@@ -122,7 +122,7 @@ Page {
                     }
                 }
             }
-
+            /*-------------------------------------------------------------------------------------------------------------------------*/
             Column {
                 id: popularColumn
 
@@ -163,7 +163,7 @@ Page {
                     }
                 }
             }
-
+            /*-------------------------------------------------------------------------------------------------------------------------*/
             Column {
                 id: popSongsColumn
 
@@ -203,7 +203,7 @@ Page {
                     }
                 }
             }
-
+            /*-------------------------------------------------------------------------------------------------------------------------*/
             Column {
                 id: podcastsToTry
 
@@ -215,7 +215,7 @@ Page {
                     font.bold: true
                     fontSize: 24
                     leftPadding: dp(Theme.contentPadding)
-                    text: "Podcasts to try"
+                    text: "Sách văn học"
                 }
 
 
@@ -244,6 +244,209 @@ Page {
                     }
                 }
             }
+            /*-------------------------------------------------------------------------------------------------------------------------*/
+            Column {
+                id: economic
+
+                width: parent.width
+                spacing: dp(20)
+                visible: homePageModels.economicBookModel.count > 0
+
+                AppText {
+                    font.bold: true
+                    fontSize: 24
+                    leftPadding: dp(Theme.contentPadding)
+                    text: "Sách kinh tế"
+                }
+
+
+                AppFlickable {
+                    width: parent.width
+                    height: contentHeight
+                    flickableDirection: Flickable.HorizontalFlick
+                    contentWidth: economicBookRow.width
+                    contentHeight: economicBookRow.height
+
+                    Row {
+                        id: economicBookRow
+                        leftPadding: dp(Theme.contentPadding)
+                        rightPadding: dp(Theme.contentPadding)
+                        spacing: dp(Theme.contentPadding)
+
+                        Repeater {
+                            model: homePageModels.economicBookModel
+
+                            HomePageListDelegate {
+                                onSelected: {
+                                    root.navigationStack.push(previewPageComponent, {"modelEntry": model})
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            /*-------------------------------------------------------------------------------------------------------------------------*/
+            Column {
+                id: kids
+
+                width: parent.width
+                spacing: dp(20)
+                visible: homePageModels.kidsBookModel.count > 0
+
+                AppText {
+                    font.bold: true
+                    fontSize: 24
+                    leftPadding: dp(Theme.contentPadding)
+                    text: "Sách thiếu nhi"
+                }
+
+
+                AppFlickable {
+                    width: parent.width
+                    height: contentHeight
+                    flickableDirection: Flickable.HorizontalFlick
+                    contentWidth: kidsBookRow.width
+                    contentHeight: kidsBookRow.height
+
+                    Row {
+                        id: kidsBookRow
+                        leftPadding: dp(Theme.contentPadding)
+                        rightPadding: dp(Theme.contentPadding)
+                        spacing: dp(Theme.contentPadding)
+
+                        Repeater {
+                            model: homePageModels.kidsBookModel
+
+                            HomePageListDelegate {
+                                onSelected: {
+                                    root.navigationStack.push(previewPageComponent, {"modelEntry": model})
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+/*-------------------------------------------------------------------------------------------------------------------------*/
+            Column {
+                id: law
+
+                width: parent.width
+                spacing: dp(20)
+                visible: homePageModels.lawBookModel.count>0
+                AppText {
+                    font.bold: true
+                    fontSize: 24
+                    leftPadding: dp(Theme.contentPadding)
+                    text: "Sách pháp luật"
+                }
+
+
+                AppFlickable {
+                    width: parent.width
+                    height: contentHeight
+                    flickableDirection: Flickable.HorizontalFlick
+                    contentWidth: lawBookRow.width
+                    contentHeight: lawBookRow.height
+
+                    Row {
+                        id: lawBookRow
+                        leftPadding: dp(Theme.contentPadding)
+                        rightPadding: dp(Theme.contentPadding)
+                        spacing: dp(Theme.contentPadding)
+
+                        Repeater {
+                            model: homePageModels.lawBookModel
+
+                            HomePageListDelegate {
+                                onSelected: {
+                                    root.navigationStack.push(previewPageComponent, {"modelEntry": model})
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+/*-------------------------------------------------------------------------------------------------------------------------*/
+            Column {
+                id: history
+
+                width: parent.width
+                spacing: dp(20)
+                visible: homePageModels.historyBookModel.count>0
+                AppText {
+                    font.bold: true
+                    fontSize: 24
+                    leftPadding: dp(Theme.contentPadding)
+                    text: "Sách lịch sử"
+                }
+
+
+                AppFlickable {
+                    width: parent.width
+                    height: contentHeight
+                    flickableDirection: Flickable.HorizontalFlick
+                    contentWidth: historyBookRow.width
+                    contentHeight: historyBookRow.height
+
+                    Row {
+                        id: historyBookRow
+                        leftPadding: dp(Theme.contentPadding)
+                        rightPadding: dp(Theme.contentPadding)
+                        spacing: dp(Theme.contentPadding)
+
+                        Repeater {
+                            model: homePageModels.historyBookModel
+
+                            HomePageListDelegate {
+                                onSelected: {
+                                    root.navigationStack.push(previewPageComponent, {"modelEntry": model})
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+/*-------------------------------------------------------------------------------------------------------------------------*/
+            Column {
+                id: medical
+
+                width: parent.width
+                spacing: dp(20)
+                visible: homePageModels.medicalBookModel.count > 0
+                AppText {
+                    font.bold: true
+                    fontSize: 24
+                    leftPadding: dp(Theme.contentPadding)
+                    text: "Sách y tế, sức khỏe"
+                }
+
+
+                AppFlickable {
+                    width: parent.width
+                    height: contentHeight
+                    flickableDirection: Flickable.HorizontalFlick
+                    contentWidth: medicalBookRow.width
+                    contentHeight: medicalBookRow.height
+
+                    Row {
+                        id: medicalBookRow
+                        leftPadding: dp(Theme.contentPadding)
+                        rightPadding: dp(Theme.contentPadding)
+                        spacing: dp(Theme.contentPadding)
+
+                        Repeater {
+                            model: homePageModels.medicalBookModel
+
+                            HomePageListDelegate {
+                                onSelected: {
+                                    root.navigationStack.push(previewPageComponent, {"modelEntry": model})
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+/*-------------------------------------------------------------------------------------------------------------------------*/
         }
     }
 
