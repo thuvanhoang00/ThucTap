@@ -31,7 +31,7 @@ Column {
     id: textInput
     anchors { left: parent.left; right: parent.right }
     borderWidth: internal.borderWidth
-
+    borderColor: "#660033"
     // here we change borderColor depending on the current textinput state
     states: [
       State {

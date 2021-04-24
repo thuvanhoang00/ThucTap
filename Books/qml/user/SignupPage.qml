@@ -1,13 +1,29 @@
 import Felgo 3.0
 import QtQuick 2.6
+import QtGraphicalEffects 1.0
 
-FlickablePage {
+Page {
     id: root
 
-    property bool allFieldsValid: nameField.isInputCorrect && emailField.isInputCorrect && passwordField.isInputCorrect && confirmPasswordField.isInputCorrect && termsOfServiceCheck.checked
+    property bool allFieldsValid: nameField.isInputCorrect
+                                  && emailField.isInputCorrect
+                                  && passwordField.isInputCorrect
+                                  && phoneField.isInputCorrect
+                                  && confirmPasswordField.isInputCorrect
+                                  && termsOfServiceCheck.checked
 
-    //  title: qsTr("Đăng ký")
-    flickable.contentHeight: content.height
+    LinearGradient {
+        anchors.fill: parent
+
+        start: Qt.point(0, 0)
+        end: Qt.point(root.width * 0.2, root.width * 0.7)
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#ffbf80" }
+            GradientStop { position: 0.7; color: "#ffbf80" }
+        }
+    }
+
+    signal registerSucceed()
 
     Column {
         id: content
@@ -16,24 +32,18 @@ FlickablePage {
         bottomPadding: constants.defaultMargins
         anchors { left: parent.left; right: parent.right; margins: constants.defaultMargins }
 
-        // we are not enforcing anything on its height. It will grow as necessary, and the page FlickablePage
-        // will kick in making the content scrollable.
-
         ValidatedField {
             id: nameField
             label: qsTr("Tên tài khoản")
             placeholderText: qsTr("Nhập tên tài khoản")
 
-            // we only allow names composed by letters and spaces
+            // Chi chap nhan chu cai va so va _
             validator: RegExpValidator {
-                regExp: /[\w ]+/
+                regExp: /^[a-zA-Z0-9_.-]*$/
             }
-
-            // when the active focus is taken away from the textField we check if we need to display an error
             textField.onActiveFocusChanged: {
                 hasError = !textField.activeFocus && !textField.acceptableInput
             }
-
             errorMessage: qsTr("Tên tài khoản không hợp lệ")
         }
 
@@ -42,24 +52,34 @@ FlickablePage {
             label: qsTr("Email")
             placeholderText: qsTr("Nhập email")
 
-            // when the active focus is taken away from the textField we check if we need to display an error
             textField.onActiveFocusChanged: {
                 hasError = !textField.activeFocus && !textField.acceptableInput
             }
-
             errorMessage: qsTr("Địa chỉ email không hợp lệ")
 
-            // customize the text field to automatically discard invalid input and displays a "clear" text icon
             textField.inputMode: textField.inputModeEmail
+        }
+
+        ValidatedField {
+            id: phoneField
+            label: qsTr("Số điện thoại")
+            placeholderText: qsTr("Nhập Số điện thoại")
+            validator: RegExpValidator {
+                regExp: /^[0-9]{1,10}$/
+
+            }
+            property bool isPhoneNumberTooShort: textField.text.length > 0 && textField.text.length < 10
+
+            hasError: isPhoneNumberTooShort
+            errorMessage: qsTr("Số điện thoại không hợp lệ")
+            textField.inputMode: textField.inputModeDefault
         }
 
         ValidatedField {
             id: passwordField
 
-            // we display an error message if the password length is less than 6
             property bool isPasswordTooShort: textField.text.length > 0 && textField.text.length < 6
 
-            // this hides characters by default
             textField.inputMode: textField.inputModePassword
             label: qsTr("Mật khẩu")
             placeholderText: qsTr("Nhập mật khẩu")
@@ -77,7 +97,6 @@ FlickablePage {
             placeholderText: qsTr("Xác nhận mật khẩu")
             textField.inputMode: textField.inputModePassword
 
-            // we display an error message when the two password are different
             hasError: arePasswordsDifferent
             errorMessage: qsTr("Mật khẩu không khớp")
         }
@@ -92,7 +111,10 @@ FlickablePage {
             enabled: root.allFieldsValid
             text: qsTr("Đăng ký")
             onClicked: {
-                UserView.userRegister(nameField.textField.text, emailField.textField.text, "999999", passwordField.textField.text)
+                var isSucceed = UserView.userRegister(nameField.textField.text, emailField.textField.text, phoneField.textField.text, passwordField.textField.text)
+                if(isSucceed){
+                    root.registerSucceed()
+                }
             }
         }
     }

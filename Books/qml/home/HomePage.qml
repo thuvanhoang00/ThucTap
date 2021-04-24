@@ -8,8 +8,19 @@ Page {
     id: root
     title: "Trang chủ"
     property bool isLogged: UserView.loginState
-    property string userName: UserView.userName
-    property string role: UserView.userRole
+    property string userName: User.userName
+    property string userRole: {
+        if(User.userRole === 1){ // CUSTOMER
+            return "Customer"
+        }
+        else if(User.userRole === 0){
+            return "Admin"
+        }
+        else{
+            console.log("KHONG TIM THAY ROLE")
+            return ""
+        }
+    }
     rightBarItem:   TextButtonBarItem{
         width: dp(200)
         AppText{
@@ -29,7 +40,7 @@ Page {
             fontSize: dp(10)
             color: "white"
             anchors.horizontalCenter: name.horizontalCenter
-            text: "(" + root.role +")"
+            text: "(" + userRole +")"
             opacity: 0.6
         }
         visible: root.isLogged
@@ -77,12 +88,6 @@ Page {
             width: parent.width
             spacing: dp(30)
 
-
-            /***************************
-             ***
-             *** them San pham vua xem
-             ***************************/
-            /*-------------------------------------------------------------------------------------------------------------------------*/
             Column {
                 id: madeForYouColumn
 

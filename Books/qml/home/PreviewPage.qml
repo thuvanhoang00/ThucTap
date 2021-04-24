@@ -117,14 +117,14 @@ Page {
                 AppText {
                     id: mainPrice
                     anchors.left: priceBG.left
-                    anchors.leftMargin: dp(10)
+                    anchors.leftMargin: dp(0)
                     width: AppText.width
                     anchors.verticalCenter: parent.verticalCenter
                     verticalAlignment: AppText.AlignVCenter
 //                    color: Theme.textColor
                     font.bold: true
                     text: {
-                        return modelEntry.mainPrice + " đ"
+                        return "Giá: " + modelEntry.mainPrice + " đ"
                     }
                 }
                 // giá gốc

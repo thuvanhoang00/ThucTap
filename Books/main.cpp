@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QDir>
 #include "header/user/view/userview.h"
+#include "header/user/model/user.h"
 #include "header/user/database/databasecontroller.h"
 #include "header/user/controller/usercontroller.h"
 #include "header/projectpath/projectpath.h"
@@ -48,6 +49,8 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("ProjectPath", &path);
     engine.rootContext()->setContextProperty("UserView", &userview);
+    engine.rootContext()->setContextProperty("User", User::getInstance());
+
     engine.load(QUrl(felgo.mainQmlFileName()));
 
     // to start your project as Live Client, comment (remove) the lines "felgo.setMainQmlFileName ..." & "engine.load ...",

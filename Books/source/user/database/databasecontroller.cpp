@@ -25,48 +25,136 @@ DatabaseController* DatabaseController::getInstance()
     return instance;
 }
 
-//void DatabaseController::printAllUser()
-//{
-//    QSqlQuery query("SELECT * FROM users");
-//    int idName = query.record().indexOf("username");
-//    while(query.next()){
-//        QString name = query.value(idName).toString();
-//        qDebug() << "---" << name;
-//    }
-//}
+void DatabaseController::printAllUser()
+{
+    QSqlQuery query("SELECT * FROM users");
+    int idName = query.record().indexOf("username");
+    while(query.next()){
+        QString name = query.value(idName).toString();
+        qDebug() << "---" << name;
+    }
+}
 
-bool DatabaseController::processLogin(QString name, QString password)
+bool DatabaseController::processLogin(QString name, QString password, QString& email, QString& phone, Role& role)
 {
     QSqlQuery query(QString("SELECT * FROM users WHERE username = '%1'").arg(name));
     int idPass = query.record().indexOf("password");
+    int idEmail = query.record().indexOf("email");
+    int idPhone = query.record().indexOf("phone");
+    int idRole = query.record().indexOf("role");
 
     while(query.next()){
-        QString value = query.value(idPass).toString();
-        if(value == password)
+        QString pass = query.value(idPass).toString();
+        if(pass == password)
         {
+            email = query.value(idEmail).toString();
+            phone = query.value(idPhone).toString();
+            role = static_cast<Role>(query.value(idRole).toInt());
+
             return true;
         }
     }
     return false;
 }
 
-QString DatabaseController::getRole(QString name)
+bool DatabaseController::isUserNameExist(QString name)
 {
-    qDebug() << QString("%1 %2").arg(Q_FUNC_INFO).arg(name);
-    QString ret = "";
-    QSqlQuery query(QString("SELECT * FROM users WHERE username = '%1'").arg(name));
-    int idRole = query.record().indexOf("role");
-    while(query.next()){
-        int value = query.value(idRole).toInt();
-        qDebug() << "role---" << value;
-        if(value == 0)
-            ret = "admin";
-        else if(value == 1){
-            ret = "customer";
+    bool ret = false;
+
+    QSqlQuery checkQuery;
+    checkQuery.prepare("SELECT username FROM users WHERE username = (:name)");
+    checkQuery.bindValue(":name", name);
+
+    if(checkQuery.exec()){
+        if(checkQuery.next()){
+            ret = true;
         }
-        else
-        {}
     }
-    qDebug() << "ret---" << ret;
+    else {
+        qDebug() << QString("Khong tim thay username = %1").arg(name);
+    }
+
     return ret;
 }
+
+bool DatabaseController::isUserEmailExist(QString email)
+{
+    bool ret = false;
+
+    QSqlQuery checkQuery;
+    checkQuery.prepare("SELECT email FROM users WHERE email = (:email)");
+    checkQuery.bindValue(":email", email);
+
+    if(checkQuery.exec()){
+        if(checkQuery.next()){
+            ret = true;
+        }
+    }
+    else {
+        qDebug() << QString("Khong tim thay email = %1").arg(email);
+    }
+
+    return ret;
+}
+
+bool DatabaseController::isUserPhoneExist(QString phone)
+{
+    bool ret = false;
+
+    QSqlQuery checkQuery;
+    checkQuery.prepare("SELECT phone FROM users WHERE phone = (:phone)");
+    checkQuery.bindValue(":phone", phone);
+
+    if(checkQuery.exec()){
+        if(checkQuery.next()){
+            ret = true;
+        }
+    }
+    else {
+        qDebug() << QString("Khong tim thay phone = %1").arg(phone);
+    }
+
+    return ret;
+}
+
+bool DatabaseController::addUser(QString name, QString email, QString phone, QString password, Role role)
+{
+    bool success = false;
+    QSqlQuery addQuery{m_db};
+    addQuery.prepare("INSERT INTO users(username, email, phone, password) VALUES (:name, :email, :phone, :password)");
+    addQuery.bindValue(":name", name);
+    addQuery.bindValue(":email", email);
+    addQuery.bindValue(":phone", phone);
+    addQuery.bindValue(":password", password);
+    addQuery.bindValue(":role", 1);
+
+    if(addQuery.exec()){
+        qDebug() << "Add user done! ";
+        success = true;
+    }
+    else{
+        qDebug() << "Add user failed! " << addQuery.lastError();
+    }
+    return success;
+}
+
+//QString DatabaseController::getRole(QString name)
+//{
+//    qDebug() << QString("%1 %2").arg(Q_FUNC_INFO).arg(name);
+//    QString ret = "";
+//    QSqlQuery query(QString("SELECT * FROM users WHERE username = '%1'").arg(name));
+//    int idRole = query.record().indexOf("role");
+//    while(query.next()){
+//        int value = query.value(idRole).toInt();
+//        qDebug() << "role---" << value;
+//        if(value == 0)
+//            ret = "admin";
+//        else if(value == 1){
+//            ret = "customer";
+//        }
+//        else
+//        {}
+//    }
+//    qDebug() << "ret---" << ret;
+//    return ret;
+//}

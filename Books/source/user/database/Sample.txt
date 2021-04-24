@@ -1,0 +1,7 @@
+CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL UNIQUE, email TEXT NOT NULL UNIQUE, phone CHAR(10) NOT NULL UNIQUE, password TEXT NOT NULL, role INTEGER NOT NULL DEFAULT 1);
+
+INSERT INTO users(username, email, phone, password, role)
+VALUES('hoangvanthu', 'hoangvanthu@gmail.com', '0123456789', '123456', 0);
+
+INSERT INTO users(username, email, phone, password, role)
+VALUES('khachhang', 'khachhang@gmail.com', '0999999999', '123456', 1);

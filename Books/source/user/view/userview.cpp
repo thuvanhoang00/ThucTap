@@ -1,4 +1,5 @@
 #include "header/user/view/userview.h"
+#include "header/user/model/user.h"
 #include "header/user/controller/usercontroller.h"
 #include "header/user/database/databasecontroller.h"
 #include <QDebug>
@@ -21,37 +22,22 @@ void UserView::setLoginState(bool state)
     }
 }
 
-QString UserView::getUserName() const
-{
-    return mUserName;
-}
-
-void UserView::setUserName(QString name)
-{
-    if(mUserName != name){
-        mUserName = name;
-        qDebug() << mUserName;
-        emit userNameChanged();
-    }
-}
-
-QString UserView::getUserRole() const
-{
-    return mUserRole;
-}
-
-void UserView::setUserRole(QString role)
-{
-    if(mUserRole != role){
-        mUserRole = role;
-        emit userRoleChanged();
-    }
-}
-
-void UserView::userRegister(QString name, QString email, QString phone, QString password)
+bool UserView::userRegister(QString name, QString email, QString phone, QString password)
 {
     qDebug() << QString("%1 %2 %3 %4 %5").arg(Q_FUNC_INFO).arg(name).arg(email).arg(phone).arg(password);
 
+    bool ret = false;
+
+    ret = UserController::getInstace()->registerController(name, email, phone, password);
+
+    if(ret == true){
+        setLoginState(true);
+        qDebug() << "Dang ky thanh cong!" ;
+    }
+    else {
+        qDebug() << "Dang ky khong thanh cong!" ;
+    }
+    return ret;
 }
 
 void UserView::login(QString name, QString password)
@@ -62,8 +48,6 @@ void UserView::login(QString name, QString password)
 
     if(ret == true){
         setLoginState(true);
-        setUserName(name);
-        setUserRole(DatabaseController::getInstance()->getRole(name));
         qDebug() << "Login Succeeded!";
     }
     else{
@@ -75,5 +59,5 @@ void UserView::login(QString name, QString password)
 void UserView::logout()
 {
     setLoginState(false);
-    setUserName("");
+    UserController::getInstace()->logoutController();
 }

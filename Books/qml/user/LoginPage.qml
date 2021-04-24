@@ -2,11 +2,21 @@ import Felgo 3.0
 import QtQuick 2.6
 import QtGraphicalEffects 1.0
 
-FlickablePage {
+Page {
     id: root
 
     property bool allFieldsValid: nameField.isInputCorrect && passwordField.isInputCorrect
-    flickable.contentHeight: content.height
+
+    LinearGradient {
+        anchors.fill: parent
+
+        start: Qt.point(0, 0)
+        end: Qt.point(root.width * 0.2, root.width * 0.7)
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#ffbf80" }
+            GradientStop { position: 0.7; color: "#ffbf80" }
+        }
+    }
 
     signal loginSucceeded()
     signal loginFailed()

@@ -1,14 +1,15 @@
 import Felgo 3.0
 import QtQuick 2.0
+import QtGraphicalEffects 1.0
 import "../components"
 
 Page {
     id: page
     property string rowTitle: ""
     backNavigationEnabled: true
-    property string username: UserView.userName
-    property string email: "email@gmail.com"
-    property string phone: "0999999999"
+    property string username: User.userName
+    property string email: User.email
+    property string phone: User.phone
     property string password: "123456"
 
     rightBarItem: TextButtonBarItem {
@@ -18,56 +19,79 @@ Page {
         }
     }
 
-    Column {
-        id: contentCol
-        width: parent.width
+    Rectangle{
+        anchors.fill: parent
 
-        Rectangle{
-            id: padding
-            height: dp(20)
+        LinearGradient {
+            anchors.fill: parent
+
+            start: Qt.point(0, 0)
+            end: Qt.point(root.width * 0.2, root.width * 0.7)
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "#ffbf80" }
+                GradientStop { position: 0.7; color: "#ffbf80" }
+            }
+        }
+
+        Column {
+            id: contentCol
             width: parent.width
+            Rectangle{
+                id: padding
+                height: dp(20)
+                width: parent.width
+                color: "#ffbf80"
+            }
+
+            AppText{
+                text: "Cập nhật thông tin tài khoản"
+                font.bold: true
+                x: dp(90)
+            }
+            TextFieldRow {
+                id: username
+                textItem.text: "Tên tài khoản"
+                textFieldItem.text: page.username
+                clickEnabled: true
+                labelWidth: dp(140)
+                color: "#ffbf80"
+            }
+
+            TextFieldRow {
+                textItem.text: "Email"
+                clickEnabled: true
+                labelWidth: dp(140)
+                textFieldItem.text: page.email
+                color: "#ffbf80"
+            }
+
+            TextFieldRow {
+                id: timeSpent
+                textItem.text: "Số điện thoại"
+                labelWidth: dp(140)
+                textFieldItem.text:  page.phone
+                color: "#ffbf80"
+            }
+
+            TextFieldRow {
+                id: pass1
+                textItem.text: "Mật khẩu"
+                placeHolder: "Nhập mật khẩu"
+                labelWidth: dp(140)
+                color: "#ffbf80"
+            }
+            TextFieldRow {
+                id: pass2
+                textItem.text: "Xác nhận mật khẩu"
+                placeHolder: "Nhập lại mật khẩu"
+                labelWidth: dp(140)
+                color: "#ffbf80"
+            }
         }
 
-        AppText{
-            text: "Cập nhật thông tin tài khoản"
-            font.bold: true
-            x: dp(90)
-        }
-        TextFieldRow {
-            id: username
-            textItem.text: "Tên tài khoản"
-            textFieldItem.text: page.username
-            clickEnabled: true
-            labelWidth: dp(140)
-        }
 
-        TextFieldRow {
-            textItem.text: "Email"
-            clickEnabled: true
-            labelWidth: dp(140)
-            textFieldItem.text: page.email
-        }
-
-        TextFieldRow {
-            id: timeSpent
-            textItem.text: "Số điện thoại"
-            labelWidth: dp(140)
-            textFieldItem.text:  page.phone
-        }
-
-        TextFieldRow {
-            id: pass1
-            textItem.text: "Mật khẩu"
-            placeHolder: "Nhập mật khẩu"
-            labelWidth: dp(140)
-        }
-        TextFieldRow {
-            id: pass2
-            textItem.text: "Xác nhận mật khẩu"
-            placeHolder: "Nhập lại mật khẩu"
-            labelWidth: dp(140)
-        }
     }
+
 
     FloatingActionButton {
         id: saveButton

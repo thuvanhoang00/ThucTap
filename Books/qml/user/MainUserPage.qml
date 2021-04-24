@@ -35,7 +35,7 @@ Page {
             showItem: true
             icon: IconType.user
             LoginPage {
-                id: logPage
+                id: loginPage
                 onLoginSucceeded: {
                     root.loginOK()
                     console.log("Login successful!")
@@ -49,7 +49,11 @@ Page {
             icon: IconType.plus
             showItem: true
             SignupPage {
-                id: regPage
+                id: registerPage
+                onRegisterSucceed: {
+                    root.loginOK()
+                    console.log("Dang ky thanh cong => Login")
+                }
             }
         }
     }
@@ -58,7 +62,6 @@ Page {
         register.showItem = false
         thongtinCaNhan.visible = true
         tab.visible = false
-        // Dang Nhap thanh cong => show loading
         console.log("an cac tab")
     }
 
@@ -67,7 +70,6 @@ Page {
         register.showItem = true
         thongtinCaNhan.visible = false
         tab.visible = true
-        // Dang Nhap thanh cong => show loading
         console.log("hien cac tab")
     }
 

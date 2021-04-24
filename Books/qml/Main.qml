@@ -14,6 +14,8 @@ App {
       if (system.desktopPlatform) {
         Theme.platform = "android"
       }
+      // background color of Row
+      Theme.listItem.backgroundColor = "#ffbf80"
     }
     property bool isLogged: false
     property string userName: ""
