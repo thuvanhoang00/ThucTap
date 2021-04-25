@@ -12,6 +12,8 @@ public:
     void printAllUser();
     bool processLogin(QString name, QString password, QString &email, QString& phone, Role &role);
 
+    // Thay doi thong tin User
+    bool updateProfile(QString name, QString phone, QString password);
     // Tim trong Database xem da ton tai hay chua
     bool isUserNameExist(QString name);
     bool isUserEmailExist(QString email);

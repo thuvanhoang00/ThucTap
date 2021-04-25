@@ -113,13 +113,45 @@ Page {
             onClicked: {
                 var isSucceed = UserView.userRegister(nameField.textField.text, emailField.textField.text, phoneField.textField.text, passwordField.textField.text)
                 if(isSucceed){
-                    root.registerSucceed()
+                    succeedDialog.open()
+//                    root.registerSucceed()
+                } else{
+                    failedDialog.open()
                 }
             }
         }
     }
     Constants {
         id: constants
+    }
+
+    Dialog{
+        id: succeedDialog
+        title: "Đăng ký thành công!"
+        positiveActionLabel: "Tiếp tục"
+        negativeAction: false
+        onAccepted: {
+            root.registerSucceed()
+            close()
+        }
+    }
+
+    Dialog{
+        id: failedDialog
+        title: "Đăng ký không thành công! Thông tin không hợp lệ"
+        positiveActionLabel: "Tiếp tục"
+        negativeAction: false
+        onAccepted: {
+            // Clear het cac truong vua nhap
+            termsOfServiceCheck.checked = false
+            nameField.textField.text = ""
+            emailField.textField.text = ""
+            passwordField.textField.text = ""
+            confirmPasswordField.textField.text = ""
+            phoneField.textField.text = ""
+            close()
+        }
+
     }
 }
 

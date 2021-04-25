@@ -22,6 +22,21 @@ void UserView::setLoginState(bool state)
     }
 }
 
+bool UserView::changeUserProfile(QString name, QString phone, QString password)
+{
+    qDebug() << QString("%1 %2 %3 %4").arg(Q_FUNC_INFO).arg(name).arg(phone).arg(password);
+    bool ret = false;
+
+    ret = UserController::getInstace()->changeUserProfileController(name, phone, password);
+    if(ret){
+        qDebug() << "Thay doi thong tin thanh cong!";
+    }
+    else{
+        qDebug() << "Khong thay doi duoc thong tin!";
+    }
+    return ret;
+}
+
 bool UserView::userRegister(QString name, QString email, QString phone, QString password)
 {
     qDebug() << QString("%1 %2 %3 %4 %5").arg(Q_FUNC_INFO).arg(name).arg(email).arg(phone).arg(password);

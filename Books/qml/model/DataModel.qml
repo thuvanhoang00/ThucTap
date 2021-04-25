@@ -19,7 +19,7 @@ Item {
     {"id":"11914","title":"Thông tin tài khoản", "imageSrc":"../../assets/icon-jira-issue.png"},
     {"id":"10095","title":"Lịch sử mua hàng","imageSrc":"../../assets/icon-jira-story.png"},
     {"id":"13123","title":"Quản lý đơn hàng", "imageSrc":"../../assets/icon-jira-issue.png"},
-    {"id":"12124","title":"PlaceHolder", "imageSrc":"../../assets/icon-jira-issue.png"}
+    {"id":"12124","title":"Tùy chọn", "imageSrc":"../../assets/icon-jira-issue.png"}
   ]
 
   property var statusHelper: [

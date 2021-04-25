@@ -2,7 +2,7 @@ import Felgo 3.0
 import QtQuick 2.0
 import QtGraphicalEffects 1.0
 import "../components"
-
+import "../../user"
 Page {
     id: page
     property string rowTitle: ""
@@ -10,7 +10,7 @@ Page {
     property string username: User.userName
     property string email: User.email
     property string phone: User.phone
-    property string password: "123456"
+    property string password: User.password
 
     rightBarItem: TextButtonBarItem {
         text: "Lưu"
@@ -49,7 +49,7 @@ Page {
                 x: dp(90)
             }
             TextFieldRow {
-                id: username
+                id: usernameField
                 textItem.text: "Tên tài khoản"
                 textFieldItem.text: page.username
                 clickEnabled: true
@@ -58,6 +58,7 @@ Page {
             }
 
             TextFieldRow {
+                id: emailField
                 textItem.text: "Email"
                 clickEnabled: true
                 labelWidth: dp(140)
@@ -66,19 +67,34 @@ Page {
             }
 
             TextFieldRow {
-                id: timeSpent
+                id: phoneField
                 textItem.text: "Số điện thoại"
                 labelWidth: dp(140)
-                textFieldItem.text:  page.phone
+                textFieldItem.text: User.phone
                 color: "#ffbf80"
+
+                textFieldItem.validator: RegExpValidator {
+                    regExp: /^[0-9]{1,10}$/
+                }
+            }
+
+            TextFieldRow {
+                id: oldPass
+                textItem.text: "Mật khẩu"
+                placeHolder: "Nhập mật khẩu hiện tại"
+                labelWidth: dp(140)
+                color: "#ffbf80"
+                textFieldItem.inputMode: textFieldItem.inputModePassword
+
             }
 
             TextFieldRow {
                 id: pass1
-                textItem.text: "Mật khẩu"
-                placeHolder: "Nhập mật khẩu"
+                textItem.text: "Mật khẩu mới"
+                placeHolder: "Nhập mật khẩu mới"
                 labelWidth: dp(140)
                 color: "#ffbf80"
+                textFieldItem.inputMode: textFieldItem.inputModePassword
             }
             TextFieldRow {
                 id: pass2
@@ -86,10 +102,10 @@ Page {
                 placeHolder: "Nhập lại mật khẩu"
                 labelWidth: dp(140)
                 color: "#ffbf80"
+                textFieldItem.inputMode: textFieldItem.inputModePassword
+
             }
         }
-
-
     }
 
 
@@ -112,12 +128,73 @@ Page {
     }
 
     function save() {
-        if(worklog) {
-            dataModel.updateWorklog(issue, worklog, startDate, timeSpent.value, comment.value)
-        } else {
-            dataModel.addWorklog(issue, startDate, timeSpent.value, comment.value)
+        // Kiểm tra các giá trị vừa nhập
+        {
+            console.log("Mat khau hien tai: " + User.password)
+            if(phoneField.textFieldItem.text == User.phone &&
+                    pass1.textFieldItem.text.length == 0 &&
+                    pass2.textFieldItem.text.length == 0){
+                dialogText.text = "Vui lòng nhập thông tin muốn thay đổi!"
+            }
+            if(phoneField.textFieldItem.text != User.phone ||
+                    pass1.textFieldItem.text.length != 0 ||
+                    pass2.textFieldItem.text.length != 0){
+                // Kiem tra mat khau hien tai
+                if(oldPass.textFieldItem.text != User.password){
+                    dialogText.text = "Nhập sai mật khẩu hiện tại!"
+                } else{
+                    // Kiem tra sdt hop le hay khong
+                    var sdt = false
+                    if(phoneField.textFieldItem.text.length == 10 ||
+                            phoneField.textFieldItem.text == User.phone){
+                        sdt = true
+                    }
+                    // Kiem tra mat khau moi hop le hay khong
+                    var mk = false
+                    if(((pass1.textFieldItem.text.length >= 6) && (pass1.textFieldItem.text == pass2.textFieldItem.text))
+                            || (pass1.textFieldItem.text.length == 0 && pass2.textFieldItem.text.length == 0)){
+                        mk = true
+                    }
+                    // Ca 2 deu hop le thi moi thay doi
+                    if ((sdt && mk) == true) {
+                        // Lưu vào Database
+                        var savePhone = phoneField.textFieldItem.text
+                        var savePass  = (pass1.textFieldItem.text.length != 0) ? pass1.textFieldItem.text : User.password
+                        UserView.changeUserProfile(User.userName, savePhone, savePass)
+                        dialogText.text = "Thay đổi thành công!"
+                    } else {
+                        dialogText.text = "Sai thông tin!"
+                    }
+                }
+            }
         }
-        page.navigationStack.pop()
+        saveDialog.open()
+        //        page.navigationStack.pop()
     }
 
+    Dialog{
+        id: saveDialog
+        title: "Thông báo"
+        positiveActionLabel: "Đồng ý!"
+        negativeAction: false
+        onAccepted: {
+            // clear cac truong vua nhap
+            phoneField.textFieldItem.text = User.phone
+            pass1.textFieldItem.text = ""
+            pass2.textFieldItem.text = ""
+            oldPass.textFieldItem.text = ""
+            close()
+        }
+        scaleAnimation.easing.type: Easing["OutBack"]
+        scaleAnimation.duration: 400
+
+        AppText{
+            id: dialogText
+            y: dp(50)
+            width: parent.width
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: AppText.AlignHCenter
+            text: "aaaa"
+        }
+    }
 }

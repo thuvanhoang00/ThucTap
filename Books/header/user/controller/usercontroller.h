@@ -10,6 +10,7 @@ class UserController
 {
 public:
     static UserController* getInstace();
+    bool changeUserProfileController(QString name, QString phone, QString password);
     bool loginController(QString name, QString password);
     bool registerController(QString name, QString email, QString phone, QString password, Role role = Role::CUSTOMER);
     void logoutController();

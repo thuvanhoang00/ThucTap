@@ -19,31 +19,26 @@ Page{
         }
     }
 
-    Rectangle{
-        anchors.fill: parent
-        color: "#ffbf80"
+    ListPage {
+        id: userProfileDetailPage
+        title: "userProfileDetail"
+        model: dataModel.filteredIssuesModel
+        backgroundColor: "#ffbf80"
 
-        ListPage {
-            id: userProfileDetailPage
-            title: "userProfileDetail"
-            anchors.fill: parent
-            model: dataModel.filteredIssuesModel
-
-            delegate: SimpleRow {
-                imageSource: root.imagePath
-    //            color: "#ffbf80"
-                text: model.title
-                onSelected: {
-                    userProfileDetailPage.navigationStack.push(detailDelegateComponent, {issue: model})
-                }
+        delegate: SimpleRow {
+            iconSource: index == 0 ? IconType.user : IconType.yahoo
+            active: true
+            text: model.title
+            onSelected: {
+                userProfileDetailPage.navigationStack.push(detailDelegateComponent, {issue: model})
             }
         }
     }
 
+
     Component {
         id: detailDelegateComponent
         DetailProfileDelegate {
-//                rowTitle: dataModel.title
         }
     }
 
@@ -53,11 +48,25 @@ Page{
         anchors.bottomMargin: dp(50)
         text: qsTr("Đăng Xuất")
         onClicked: {
-            UserView.logout()
-            root.logOut()
+            logoutDialog.open()
         }
     }
     Component.onCompleted: {
         console.log("aaaaaaaaaaaaaaaa ------ " + root.imagePath)
+    }
+
+    Dialog {
+        id: logoutDialog
+        title: "Bạn muốn thoát tài khoản ?"
+        positiveActionLabel: "Đồng ý"
+        negativeActionLabel: "Từ chối"
+        onAccepted: {
+            UserView.logout()
+            root.logOut()
+            close()
+        }
+        onCanceled: {
+            close()
+        }
     }
 }

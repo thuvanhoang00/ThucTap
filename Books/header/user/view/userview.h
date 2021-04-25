@@ -16,6 +16,7 @@ public:
     bool getLoginState() const;
     void setLoginState(bool state);
 
+    Q_INVOKABLE bool changeUserProfile(QString name, QString phone, QString password);
     Q_INVOKABLE bool userRegister(QString name, QString email, QString phone, QString password);
     Q_INVOKABLE void login(QString name, QString password);
     Q_INVOKABLE void logout();

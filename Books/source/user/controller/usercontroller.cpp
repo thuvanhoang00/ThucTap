@@ -10,6 +10,19 @@ UserController* UserController::getInstace(){
     return instance;
 }
 
+bool UserController::changeUserProfileController(QString name, QString phone, QString password)
+{
+    bool ret = false;
+    ret = DatabaseController::getInstance()->updateProfile(name, phone, password);
+    if(ret){
+        // Cap nhat vao Model
+        qDebug() << QString("Thay doi thong tin thanh cong, cap nhat vao Model: %1 %2 %3").arg(name).arg(phone).arg(password);
+        User::getInstance()->setPhone(phone);
+        User::getInstance()->setPassword(password);
+    }
+    return ret;
+}
+
 bool UserController::loginController(QString name, QString password)
 {
     bool ret = false;
@@ -32,10 +45,10 @@ bool UserController::loginController(QString name, QString password)
 bool UserController::registerController(QString name, QString email, QString phone, QString password, Role role)
 {
     bool ret = false;
-    // Kiem tra trong Database xem userName, email, phone da ton tai hay chua
+    // Kiem tra trong Database xem userName, email da ton tai hay chua
     if(DatabaseController::getInstance()->isUserEmailExist(email) ||
-       DatabaseController::getInstance()->isUserNameExist(name) ||
-       DatabaseController::getInstance()->isUserPhoneExist(phone)){ // mot trong 3 da ton tai
+       DatabaseController::getInstance()->isUserNameExist(name) /*||
+       DatabaseController::getInstance()->isUserPhoneExist(phone)*/){ // mot trong 2 da ton tai
         qDebug() << QString("%1 Thong tin bi trung").arg(Q_FUNC_INFO);
         return ret;
     }

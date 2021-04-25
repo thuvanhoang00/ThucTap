@@ -57,6 +57,19 @@ bool DatabaseController::processLogin(QString name, QString password, QString& e
     return false;
 }
 
+bool DatabaseController::updateProfile(QString name, QString phone, QString password)
+{
+    bool ret =  false;
+    QSqlQuery updateQuery(QString("UPDATE users SET phone = '%1', password = '%2' WHERE username = '%3'").arg(phone).arg(password).arg(name));
+    if(updateQuery.exec()){
+        ret = true;
+    }
+    else{
+        qDebug() << "Update user failed! " << updateQuery.lastError();
+    }
+    return ret;
+}
+
 bool DatabaseController::isUserNameExist(QString name)
 {
     bool ret = false;
