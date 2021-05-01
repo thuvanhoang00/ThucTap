@@ -4,6 +4,7 @@ import "./user"
 import "./cart"
 import "./home"
 import "./search"
+import "model"
 
 App {
     id: root
@@ -21,6 +22,23 @@ App {
     property string userName: ""
     property string role: ""
 
+    /********************************* MODEL *************************************/
+
+    BookModel {
+        id: bookModel
+    }
+
+    /*****************************************************************************/
+    Logic {
+        id: logic
+    }
+
+    /****************************************************************************/
+    Storage {
+        id: storage
+    }
+
+    /****************************************************************************/
     Navigation {
         id: navigation
 
@@ -54,7 +72,7 @@ App {
             }
         }
 
-        // Admin: thống kê, Users: sales
+        // Admin: thống kê, Users:
         NavigationItem {
             id: customPageItem
             title: qsTr("Tùy chọn")
@@ -89,6 +107,8 @@ App {
             }
         }
     }
+
+
     Component {
       id: searchPageComponent
 
@@ -99,9 +119,5 @@ App {
       id: previewPageComponent
 
       PreviewPage { }
-    }
-
-    BookModel {
-        id: bookModel
     }
 }

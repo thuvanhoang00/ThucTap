@@ -15,7 +15,7 @@ Item {
         height: width
         fillMode: Image.PreserveAspectCrop
 
-        source: Qt.resolvedUrl(dataModel.getCover(model))
+        source: Qt.resolvedUrl(bookModel.getCover(model))
 
     }
 

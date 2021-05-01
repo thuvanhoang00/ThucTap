@@ -2,6 +2,7 @@ import Felgo 3.0
 import QtQuick 2.8
 import QtGraphicalEffects 1.0
 import "./components"
+import "../model"
 import "./model"
 
 Page {
@@ -28,7 +29,7 @@ Page {
             anchors.top: parent.top
             anchors.topMargin: dp(15)
             anchors.horizontalCenter: parent.horizontalCenter
-            fontSize: dp(12)
+            fontSize: dp(7)
             font.bold: true
             color: "white"
             text: "Xin chào! " + userName
@@ -36,8 +37,8 @@ Page {
         AppText {
             id: role
             anchors.top: name.bottom
-            anchors.topMargin: dp(5)
-            fontSize: dp(10)
+            anchors.topMargin: dp(2)
+            fontSize: dp(5)
             color: "white"
             anchors.horizontalCenter: name.horizontalCenter
             text: "(" + userRole +")"
@@ -46,13 +47,9 @@ Page {
         visible: root.isLogged
     }
 
-    DataModel {
-        id: dataModel
-    }
-
-    BookModel {
-        id: bookModel
-    }
+//    DataModel {
+//        id: dataModel
+//    }
 
     Rectangle {
         z: 1
@@ -459,9 +456,9 @@ Page {
         id: homePageModels
     }
 
-    Component {
-        id: previewPageComponent
+//    Component {
+//        id: previewPageComponent
 
-        PreviewPage{}
-    }
+//        PreviewPage{}
+//    }
 }

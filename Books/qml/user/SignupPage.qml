@@ -27,7 +27,7 @@ Page {
 
     Column {
         id: content
-        spacing: constants.defaultMargins
+        spacing: dp(3)
         topPadding: constants.defaultMargins
         bottomPadding: constants.defaultMargins
         anchors { left: parent.left; right: parent.right; margins: constants.defaultMargins }

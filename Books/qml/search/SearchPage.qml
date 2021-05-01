@@ -23,7 +23,8 @@ Page {
         if (searchTerm != "") {
             bookModel.buildModelUponSearch(searchTerm)
         } else {
-            searchBar.textField.forceActiveFocus()
+//            searchBar.textField.forceActiveFocus()
+            bookModel.buildModelUponSearch("")
         }
     }
 
@@ -45,8 +46,6 @@ Page {
                 Behavior on width {NumberAnimation{duration: 150; easing.type: Easing.InOutQuad}}
 
                 textField.onDisplayTextChanged: {
-//                    console.log("dang tim kiem: " + textField.displayText)
-//                    bookModel.buildModelUponSearch(textField.displayText)
                 }
                 onAccepted: {
                     console.log("dang tim kiem: " + textField.displayText)
@@ -70,6 +69,7 @@ Page {
                 onClicked: {
                     searchBar.textField.focus = false
                     searchBar.textField.clear()
+                    bookModel.buildModelUponSearch("")
                 }
             }
         }

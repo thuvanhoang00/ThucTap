@@ -82,7 +82,7 @@ Page {
         }
 
         font.bold: true
-        text: qsTr("Duyệt")
+        text: qsTr("Tìm theo")
       }
 
       Grid {

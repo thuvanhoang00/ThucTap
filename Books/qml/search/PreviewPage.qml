@@ -5,34 +5,34 @@ import QtGraphicalEffects 1.0
 Page {
     id: root
     property var modelEntry: undefined
+//    property bool isFavorite: bookModel.isFavorite(root.modelEntry)
 
     backNavigationEnabled: true
 
     rightBarItem: IconButtonBarItem{
+        id: cartIcon
         icon: IconType.cartplus
         iconSize: dp(35)
-    }
+        color: "white"
+        onClicked: {
+            bookModel.addToFavorites(root.modelEntry)
 
-    function getCover(entry) {
-      if (entry === undefined) {
-        return ""
-      }
-
-      if (entry.type === "Song") {
-        if (entry.image !== "" && entry.image !== undefined) {
-          return Qt.resolvedUrl(entry.image)
+//            root.isFavorite = bookModel.isFavorite(root.modelEntry)
+            logic.favoritesChanged(root.modelEntry["name"])
+            cartIcon.color = "#00ff00"
+            cartIcon.iconSize = dp(40)
+            timer.start()
         }
 
-        if (entry.album !== "" && entry.album !== undefined) {
-          return root.findAndGetFieldValue(entry.album, "image")
-        } else if (entry.author !== "" && entry.author !== undefined) {
-          return root.findAndGetFieldValue(entry.author, "image")
+        Timer{
+            id: timer
+            interval: 150
+            onTriggered: {
+                cartIcon.color = "white"
+                cartIcon.iconSize = dp(35)
+
+            }
         }
-
-        return "" // put same placeholder here
-      }
-
-      return Qt.resolvedUrl(entry.image)
     }
 
     LinearGradient {
@@ -72,7 +72,7 @@ Page {
                 width: dp(250)
                 height: width
 
-                source: Qt.resolvedUrl(root.getCover(modelEntry))
+                source: Qt.resolvedUrl(bookModel.getCover(modelEntry))
             }
             Rectangle {
                 id: ratingBG
