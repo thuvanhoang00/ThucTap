@@ -5,7 +5,7 @@ import QtGraphicalEffects 1.0
 Page {
     id: root
     property var modelEntry: undefined
-//    property bool isFavorite: bookModel.isFavorite(root.modelEntry)
+    //    property bool isFavorite: bookModel.isFavorite(root.modelEntry)
 
     backNavigationEnabled: true
 
@@ -16,8 +16,6 @@ Page {
         color: "white"
         onClicked: {
             bookModel.addToFavorites(root.modelEntry)
-
-//            root.isFavorite = bookModel.isFavorite(root.modelEntry)
             logic.favoritesChanged(root.modelEntry["name"])
             cartIcon.color = "#00ff00"
             cartIcon.iconSize = dp(40)
@@ -141,7 +139,7 @@ Page {
                     width: AppText.width
                     anchors.verticalCenter: parent.verticalCenter
                     verticalAlignment: AppText.AlignVCenter
-//                    color: Theme.textColor
+                    //                    color: Theme.textColor
                     font.bold: true
                     text: {
                         return modelEntry.mainPrice + " đ"
@@ -198,8 +196,69 @@ Page {
                 textSize: sp(15)
 
                 onClicked: {
+                    if(UserView.loginState == false){
+                        dangNhap.open()
+                    }
+                    else{
+                        xacNhanDatMua.open()
+                    }
                 }
             }
         }
+    }
+
+    Dialog {
+        id: dangNhap
+        title: "Thông báo"
+        positiveActionLabel: "Đồng ý"
+        negativeAction: false
+        onAccepted: {
+            close()
+        }
+        AppText {
+            text: "Bạn cần đăng nhập \nđể thực hiện chức năng này!"
+            anchors.centerIn: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: AppText.AlignHCenter
+        }
+
+    }
+
+    Dialog {
+        id: xacNhanDatMua
+        title: "Thông báo"
+        positiveActionLabel: "Đồng ý"
+        negativeActionLabel: "Từ chối"
+        AppText {
+            text: "Bạn muốn mua sản phẩm này chứ?"
+            anchors.centerIn: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: AppText.AlignHCenter
+        }
+        onAccepted: {
+            datMua.open()
+            close()
+        }
+
+        onCanceled: {
+            close()
+        }
+    }
+
+    Dialog {
+        id: datMua
+        title: "Thông báo"
+        positiveActionLabel: "Đồng ý"
+        negativeAction: false
+        onAccepted: {
+            close()
+        }
+        AppText {
+            text: "Đặt mua thành công!\n Vui lòng thanh toán: " + modelEntry["mainPrice"] + " đ"
+            anchors.centerIn: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: AppText.AlignHCenter
+        }
+
     }
 }

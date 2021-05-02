@@ -2036,31 +2036,52 @@ JsonListModel {
     /*-----------------------------------------------------------------------------------------------*/
     function addToFavorites(entry) {
         var favorites = storage.getValue("favorites")
+        var totalPrice = storage.getValue("TongTien")
+
         if (favorites === undefined) {
             favorites = []
         }
+
+        if(totalPrice === undefined){
+            totalPrice = 0
+        }
+
         if (!isFavorite(entry)) {
             favorites.push(entry["title"])
             storage.setValue(entry["title"], 0)
         }
+        totalPrice += parseInt(entry["mainPrice"])
+        console.log("tongtien: " + totalPrice)
+        storage.clearValue("TongTien")
+        storage.setValue("TongTien", totalPrice)
+
         var count = storage.getValue(entry["title"])
         storage.setValue(entry["title"], count+1)
         storage.setValue("favorites", favorites)
     }
 
     /*----------------------------------------------------------------*/
-    function removeFromFavorites(title) {
+    function removeFromFavorites(title, mainPrice) {
         var favorites = storage.getValue("favorites")
         if (favorites === undefined) {
             favorites = []
         }
+
+        var totalPrice = storage.getValue("TongTien")
+        var count = parseInt(storage.getValue(title))
+        totalPrice -= parseInt(mainPrice)*count
+        console.log("tongtien: " + totalPrice)
+        storage.clearValue("TongTien")
+        storage.setValue("TongTien", totalPrice)
+
         var index = favorites.indexOf(title)
         favorites.splice(index, 1);
         storage.setValue(title, 0)
         storage.setValue("favorites", favorites)
+
+        logic.favoritesChanged(title)
     }
     /*---------------------------------------------------------------*/
-
     function showFavorites() {
         root.remove(0, root.count)
 
@@ -2069,9 +2090,7 @@ JsonListModel {
             console.log("Favorites are unspecified")
             return
         }
-
         for (const entry of root.dataSource) {
-
             if (isFavorite(entry)) {
                 root.append(entry)
             }

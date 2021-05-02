@@ -194,7 +194,7 @@ Page {
             width: parent.width
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: AppText.AlignHCenter
-            text: "aaaa"
+            text: ""
         }
     }
 }
