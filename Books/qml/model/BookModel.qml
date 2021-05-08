@@ -2097,6 +2097,21 @@ JsonListModel {
         }
     }
 
+    function getTotalItem() {
+        root.remove(0, root.count)
+
+        var favorites = storage.getValue("favorites")
+        if (favorites === undefined) {
+            console.log("Favorites are unspecified")
+            return
+        }
+        for (const entry of root.dataSource) {
+            if (isFavorite(entry)) {
+                root.append(entry)
+            }
+        }
+        return root.count
+    }
     /*---------------------------------------------------------------*/
 
     function isFavorite(entry) {

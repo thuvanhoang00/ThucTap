@@ -19,6 +19,23 @@ Page{
         }
     }
 
+
+    // Model
+    JsonListModel {
+        id: historyModel
+        property var dataSource: [
+            {
+                "id": "",
+                "tongtien": "",
+                "thoigian" : ""
+            },
+        ]
+
+        fields: ["id", "tongtien", "thoigian"]
+        source: historyModel.dataSource
+    }
+
+
     ListPage {
         id: userProfileDetailPage
         title: "userProfileDetail"
@@ -26,11 +43,28 @@ Page{
         backgroundColor: "#ffbf80"
 
         delegate: SimpleRow {
-            iconSource: index == 0 ? IconType.user : IconType.yahoo
+            iconSource: {
+                if(index === 0)
+                    return IconType.user
+                else if(index === 1)
+                    return IconType.history
+                else if(index === 2)
+                    return IconType.history
+                else
+                    return IconType.user
+            }
             active: true
             text: model.title
             onSelected: {
-                userProfileDetailPage.navigationStack.push(detailDelegateComponent, {issue: model})
+                if(index === 0)
+                    userProfileDetailPage.navigationStack.push(detailDelegateComponent, {issue: model})
+                else if(index === 1){
+                    if(User.userRole==1)
+                    {
+                        getOrderHistory()
+                        userProfileDetailPage.navigationStack.push(historyDelegateComponent, {issue: model})
+                    }
+                }
             }
         }
     }
@@ -39,6 +73,12 @@ Page{
     Component {
         id: detailDelegateComponent
         DetailProfileDelegate {
+        }
+    }
+
+    Component {
+        id: historyDelegateComponent
+        HistoryDelegate {
         }
     }
 
@@ -61,12 +101,34 @@ Page{
         positiveActionLabel: "Đồng ý"
         negativeActionLabel: "Từ chối"
         onAccepted: {
+            storage.clearValue("favorites")
+            storage.clearValue("TongTien")
             UserView.logout()
             root.logOut()
             close()
         }
         onCanceled: {
             close()
+        }
+    }
+
+    function getOrderHistory(){
+        historyModel.remove(0, historyModel.count)
+
+        var username = User.userName
+        var accountOrderIds = accountStorage.getValue(username)
+        if(accountOrderIds === undefined){
+            console.log("accountOrderIds are undefined")
+            accountOrderIds = []
+        }
+        console.log("username:" + username + ", accountOrderIds: " + accountOrderIds.length)
+        for(const id of accountOrderIds){
+            // tu ID lay duoc thong tin ve don hang do
+            var tongTien = orderStorage.getValue(id)[0]
+            var tg = orderStorage.getValue(id)[1]
+            console.log("THOI GIAN: " + tg)
+            var entry = {"id": id, "tongtien": tongTien, "thoigian": tg}
+            historyModel.append(entry)
         }
     }
 }

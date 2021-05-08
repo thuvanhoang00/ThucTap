@@ -14,12 +14,19 @@ Page {
         icon: IconType.cartplus
         iconSize: dp(35)
         color: "white"
+        visible: User.userRole == 1
+
         onClicked: {
-            bookModel.addToFavorites(root.modelEntry)
-            logic.favoritesChanged(root.modelEntry["name"])
-            cartIcon.color = "#00ff00"
-            cartIcon.iconSize = dp(40)
-            timer.start()
+            if(UserView.loginState == true){
+                bookModel.addToFavorites(root.modelEntry)
+                logic.favoritesChanged(root.modelEntry["name"])
+                cartIcon.color = "#00ff00"
+                cartIcon.iconSize = dp(40)
+                timer.start()
+            }
+            else {
+                dangNhap.open()
+            }
         }
 
         Timer{
@@ -135,14 +142,14 @@ Page {
                 AppText {
                     id: mainPrice
                     anchors.left: priceBG.left
-                    anchors.leftMargin: dp(10)
+                    anchors.leftMargin: dp(0)
                     width: AppText.width
                     anchors.verticalCenter: parent.verticalCenter
                     verticalAlignment: AppText.AlignVCenter
                     //                    color: Theme.textColor
                     font.bold: true
                     text: {
-                        return modelEntry.mainPrice + " đ"
+                        return "Giá: " + modelEntry.mainPrice + " đ"
                     }
                 }
                 // giá gốc
@@ -183,7 +190,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 height: dp(40)
-
+                visible: User.userRole == 1
                 verticalPadding: dp(12)
                 horizontalPadding: dp(45)
 
@@ -201,6 +208,31 @@ Page {
                     }
                     else{
                         xacNhanDatMua.open()
+                    }
+                }
+            }
+            AppButton {
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                height: dp(40)
+                visible: User.userRole == 0
+                verticalPadding: dp(12)
+                horizontalPadding: dp(45)
+
+                radius: height / 2
+                backgroundColor: Theme.tintColor
+                textColor: Theme.textColor
+                enabled: true
+                flat: false
+                text: "Sửa thông tin Sách" // click vào đây là chuyển sang Tab giỏ hàng
+                textSize: sp(15)
+
+                onClicked: {
+                    if(UserView.loginState == false){
+//                        dangNhap.open()
+                    }
+                    else{
+//                        xacNhanDatMua.open()
                     }
                 }
             }
@@ -251,6 +283,33 @@ Page {
         positiveActionLabel: "Đồng ý"
         negativeAction: false
         onAccepted: {
+            // luu thong tin ve Don hang nay
+            var userName = User.userName
+            var orderID = orderIDCountStorage.getValue("orderID")
+            if(orderID === undefined){
+                console.log("orderID are undefined -- preview page")
+
+                orderID = 0
+            }
+            orderID += 1
+            orderIDCountStorage.setValue("orderID", orderID)
+
+            // Lay gia tien cua san pham nay
+            // luu vao orderStorage
+            var price =  modelEntry["mainPrice"]
+            var tg = new Date().toLocaleTimeString()
+            var arr = [price, tg]
+            orderStorage.setValue(orderID, arr)
+
+            // Luu ID cua don hang nay vao tai khoan
+            var accountOrderIDs = accountStorage.getValue(userName)
+            if(accountOrderIDs === undefined){
+                console.log("accountOrderIDs are undefined -- preview page")
+                accountOrderIDs = []
+            }
+
+            accountOrderIDs.push(orderID)
+            accountStorage.setValue(userName, accountOrderIDs)
             close()
         }
         AppText {

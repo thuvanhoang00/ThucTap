@@ -7,39 +7,40 @@ Item {
 
     property alias loggedIn: settings.loggedIn
     //  property alias worklogModel: worklogModel
-    property alias issuesModel: issuesModel
+    property alias userModel: userModel
 
     // for issue filtering
     property alias filteredIssuesModel: filteredIssuesModel
     property string issuesSearchTerm
-
-    property string totalTime: calculateTotalTime()
-
-    property var issuesJsonData: [
+    property var userJsonData: [
         {"id":"11914","title":"Thông tin tài khoản"},
         {"id":"10095","title":"Lịch sử mua hàng"},
-        {"id":"13123","title":"Quản lý đơn hàng"},
-        {"id":"12124","title":"Tùy chọn"}
+//        {"id":"13123","title":"Quản lý đơn hàng"},
+//        {"id":"12124","title":"Tùy chọn"}
     ]
 
-    property var statusHelper: [
-        {text: "TODO", color: "#172B4D"},
-        {text: "PLANNED FOR TOMORROW", color: "#00C7E5"},
-        {text: "IN PROGRESS", color: "#FFAB00"},
-        {text: "READY FOR REVIEW", color: "#36B37E"},
-        {text: "DONE", color: "#2684FF"}
+    property var adminJsonData: [
+        {"id":"11914","title":"Thông tin tài khoản"},
+//        {"id":"10095","title":"Lịch sử mua hàng"},
+//        {"id":"13123","title":"Quản lý đơn hàng"},
+//        {"id":"12124","title":"Tùy chọn"}
     ]
 
     JsonListModel {
-        id: issuesModel
-        source: dataModel.issuesJsonData
+        id: userModel
+        source: {
+            if(User.userRole === 1)
+                return dataModel.userJsonData
+            else
+                return dataModel.adminJsonData
+        }
         keyField: "id"
         fields: ["id", "title"]
     }
 
     SortFilterProxyModel {
         id: filteredIssuesModel
-        sourceModel: dataModel.issuesModel
+        sourceModel: dataModel.userModel
         filters: RegExpFilter {
             roleName: "title"
             pattern: issuesSearchTerm
@@ -155,12 +156,12 @@ Item {
         return timeInSeconds
     }
 
-    function calculateTotalTime() {
-        // this function updates automatically when count changes. a countChanged() is also triggered if a worklog is updated
-        var sum = 0
-        for(var i=0; i<worklogModel.count; i++) {
-            sum += worklogModel.get(i).timeSpentSeconds
-        }
-        return formatDuration(sum)
-    }
+//    function calculateTotalTime() {
+//        // this function updates automatically when count changes. a countChanged() is also triggered if a worklog is updated
+//        var sum = 0
+//        for(var i=0; i<worklogModel.count; i++) {
+//            sum += worklogModel.get(i).timeSpentSeconds
+//        }
+//        return formatDuration(sum)
+//    }
 }

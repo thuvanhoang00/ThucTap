@@ -27,9 +27,9 @@ Page {
         AppText{
             id: name
             anchors.top: parent.top
-            anchors.topMargin: dp(15)
+            anchors.topMargin: dp(10)
             anchors.horizontalCenter: parent.horizontalCenter
-            fontSize: dp(7)
+//            fontSize: dp(7)
             font.bold: true
             color: "white"
             text: "Xin chào! " + userName
@@ -38,7 +38,7 @@ Page {
             id: role
             anchors.top: name.bottom
             anchors.topMargin: dp(2)
-            fontSize: dp(5)
+//            fontSize: dp(5)
             color: "white"
             anchors.horizontalCenter: name.horizontalCenter
             text: "(" + userRole +")"

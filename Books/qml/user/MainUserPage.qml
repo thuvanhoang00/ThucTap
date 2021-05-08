@@ -22,7 +22,7 @@ Page {
             GradientStop { position: 0.7; color: "#ffbf80" }
         }
     }
-    DataModel {
+    UserModel {
         id: dataModel
     }
 

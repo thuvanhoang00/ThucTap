@@ -34,8 +34,23 @@ App {
     }
 
     /****************************************************************************/
+    // dành cho giỏ hàng
     Storage {
         id: storage
+    }
+    // dành cho tài khoản - các id đơn hàng của tài khoản đó
+    // khi tai khoan dat mua =>> luu thong tin voi key = "tenAccount" & value = "id don hang"
+    Storage {
+        id: accountStorage
+    }
+    // dành cho id đơn hàng - chi tiết đơn hàng (tam thoi luu tong tien cua don hang)
+    // khi co 1 action Dat mua => luu id - danh sach cac quyen sach duoc dat mua
+    Storage {
+        id: orderStorage
+    }
+    //
+    Storage {
+        id: orderIDCountStorage
     }
 
     /****************************************************************************/
@@ -72,12 +87,11 @@ App {
             }
         }
 
-        // Admin: thống kê, Users:
-        NavigationItem {
-            id: customPageItem
-            title: qsTr("Tùy chọn")
-            icon: IconType.yelp
-        }
+//        NavigationItem {
+//            id: customPageItem
+//            title: qsTr("Tùy chọn")
+//            icon: IconType.yelp
+//        }
 
         NavigationItem {
             id: searchPageItem
@@ -87,7 +101,7 @@ App {
             NavigationStack {
                 id: searchNavigationStack
 
-                initialPage: SearchTermsPage {
+                initialPage: SearchMainPage {
 
                     onSearchRequested: {
                         searchNavigationStack.push(searchPageComponent, {"searchTerm": term})
@@ -98,14 +112,25 @@ App {
 
 
         NavigationItem {
-            id: libraryPageItem
+            id: orderPageItem
             title: qsTr("Giỏ hàng")
             icon: IconType.shoppingcart
-
+            showItem: User.userRole == 1
             NavigationStack {
                 initialPage: CartPage { }
             }
         }
+
+//        NavigationItem {
+//            id: adminPageItem
+//            title: qsTr("Quyền Admin")
+//            icon: IconType.shoppingcart
+//            showItem: User.userRole == 0
+//            NavigationStack {
+//                initialPage: CartPage { }
+//            }
+//        }
+
     }
 
 
@@ -119,5 +144,13 @@ App {
       id: previewPageComponent
 
       PreviewPage { }
+    }
+
+    Component.onCompleted: {
+        console.log("clear all STORAGEEEEEEEEEEEEEEE")
+        storage.clearAll()
+        accountStorage.clearAll()
+        orderStorage.clearAll()
+        orderIDCountStorage.clearAll()
     }
 }

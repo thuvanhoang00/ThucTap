@@ -8,7 +8,7 @@ SimpleRow {
   showDisclosure: true
 
   style: StyleSimpleRow {
-    backgroundColor: Theme.colors.backgroundColor
+    backgroundColor: Theme.listItem.backgroundColor
     selectedBackgroundColor: backgroundColor
     textColor: Theme.colors.textColor
     detailTextColor: Theme.colors.textColor

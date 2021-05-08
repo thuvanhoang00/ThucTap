@@ -6,7 +6,7 @@ Page {
     id: root
 
     title: "Giỏ hàng"
-    property int totalCartItem: 1
+    property int totalCartItem: 0
     property int totalPrice: 0
 
     rightBarItem: TextButtonBarItem {
@@ -18,17 +18,19 @@ Page {
             text: "Đặt mua"
             color: "white"
             font.bold: true
-            fontSize: dp(10)
         }
 
         onClicked: {
             if(UserView.loginState == false){
                 dangNhap.open()
             } else{
-                xacNhanDatMua.open()
+                if(root.totalCartItem > 0)
+                    xacNhanDatMua.open()
+                else {
+                    khongCoSanPham.open()
+                }
             }
         }
-        visible: root.totalCartItem > 0 ? true : false
     }
 
 
@@ -43,10 +45,8 @@ Page {
         }
     }
     /*-----------------------------MODEL----------------------------------*/
-
     BookModel{
         id: cartItemModel
-
     }
     /*-----------------------------------------------------------------------*/
     AppListView {
@@ -60,7 +60,6 @@ Page {
         emptyView.children: [
             AppText {
                 anchors.centerIn: parent
-
                 fontSize: 16
                 font.bold: true
                 text: qsTr("Không có sản phẩm nào trong giỏ")
@@ -90,22 +89,26 @@ Page {
             }
             AppText {
                 id: itemCount
-                text: "Số lượng: " + storage.getValue(row.text)
+                text: "(" + storage.getValue(row.text) +")"
                 anchors.right: removeButton.left
-                anchors.rightMargin: dp(50)
+                anchors.rightMargin: dp(10)
+                font.bold: true
                 anchors.verticalCenter: removeButton.verticalCenter
                 color: "#993300"
 
             }
 
-            AppText {
-                id: itemPrice
-                text: "Giá: " + cartItemModel.get(index).mainPrice
-                anchors.right: itemCount.left
-                anchors.rightMargin: dp(50)
-                anchors.verticalCenter: itemCount.verticalCenter
-                color: "#993300"
-            }
+//            AppText {
+//                id: itemPrice
+//                text: "Giá: " + cartItemModel.get(index).mainPrice
+//                anchors.right: itemCount.left
+////                anchors.rightMargin: dp(50)
+//                maximumLineCount: 2
+//                wrapMode: Text.Wrap
+//                elide: AppText.ElideRight
+//                anchors.verticalCenter: itemCount.verticalCenter
+//                color: "#993300"
+//            }
 
         }
     }
@@ -118,6 +121,13 @@ Page {
         target: logic
 
         onFavoritesChanged: {
+            var existItem = storage.getValue("TongTien")
+            if(existItem !== undefined){
+                root.totalCartItem = 1
+            } else{
+                root.totalCartItem = 0
+            }
+
             cartItemModel.showFavorites()
         }
     }
@@ -168,10 +178,59 @@ Page {
         positiveActionLabel: "Đồng ý"
         negativeAction: false
         onAccepted: {
+            // luu thong tin ve Don hang nay
+            var userName = User.userName
+            var orderID = orderIDCountStorage.getValue("orderID")
+            if(orderID === undefined){
+                console.log("orderID are undefined -- Cart page")
+                orderID = 0
+            }
+            orderID += 1
+            orderIDCountStorage.setValue("orderID", orderID)
+
+            // Lay gia tien cua san pham nay
+            // luu vao orderStorage
+            var price = root.totalPrice
+            var tg = new Date().toLocaleTimeString()
+            var arr = [price, tg]
+            orderStorage.setValue(orderID, arr)
+
+            // Luu ID cua don hang nay vao tai khoan
+            var accountOrderIDs = accountStorage.getValue(userName)
+            if(accountOrderIDs === undefined){
+                console.log("accountOrderIDs are undefined -- Cart page")
+                accountOrderIDs = []
+            }
+
+            accountOrderIDs.push(orderID)
+            accountStorage.setValue(userName, accountOrderIDs)
+
+            storage.clearValue("favorites")
+            storage.clearValue("TongTien")
+            root.totalCartItem = 0
+            cartItemModel.showFavorites()
+
             close()
         }
         AppText {
             text: "Đặt mua thành công!\n Vui lòng thanh toán: " + root.totalPrice + " đ"
+            anchors.centerIn: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: AppText.AlignHCenter
+        }
+
+    }
+
+    Dialog {
+        id: khongCoSanPham
+        title: "Thông báo"
+        positiveActionLabel: "Đồng ý"
+        negativeAction: false
+        onAccepted: {
+            close()
+        }
+        AppText {
+            text: "Không có sản phẩm nào trong giỏ!"
             anchors.centerIn: parent
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: AppText.AlignHCenter
