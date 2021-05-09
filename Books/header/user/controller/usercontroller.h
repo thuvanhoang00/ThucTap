@@ -2,6 +2,7 @@
 #define USERCONTROLLER_H
 #include <QString>
 #include "header/user/model/user.h"
+#include <QQmlListProperty>
 
 // class nay lam theo Singleton design
 // class nay lam viec voi Database
@@ -14,6 +15,8 @@ public:
     bool loginController(QString name, QString password);
     bool registerController(QString name, QString email, QString phone, QString password, Role role = Role::CUSTOMER);
     void logoutController();
+    void deleteUser(QString name);
+    QStringList getUsersFromDB();
 private:
     UserController();
     static UserController* instance;

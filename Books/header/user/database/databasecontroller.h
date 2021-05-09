@@ -4,6 +4,7 @@
 #include <QSqlQuery>
 #include <QString>
 #include "header/user/model/user.h"
+#include <QQmlListProperty>
 class DatabaseController
 {
 public:
@@ -18,13 +19,15 @@ public:
     bool isUserNameExist(QString name);
     bool isUserEmailExist(QString email);
     bool isUserPhoneExist(QString phone);
-
+    bool deleteUser(QString name);
     bool addUser(QString name, QString email, QString phone, QString password, Role role = Role::CUSTOMER);
 
-//    // Lay cac gia tri tu Database
-//    QString getEmail();
-//    QString getPhone();
-//    Role getRole();
+    QStringList getAllUsers();
+
+    //    // Lay cac gia tri tu Database
+    //    QString getEmail();
+    //    QString getPhone();
+    //    Role getRole();
 
 private:
     DatabaseController();

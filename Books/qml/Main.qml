@@ -4,6 +4,7 @@ import "./user"
 import "./cart"
 import "./home"
 import "./search"
+import "./admin"
 import "model"
 
 App {
@@ -51,6 +52,13 @@ App {
     //
     Storage {
         id: orderIDCountStorage
+    }
+    // Danh cho admin thong ke, luu theo ngay {"ngay", ["soluong" : "", "doanhthu": ""]}
+    Storage {
+        id: revenueStorage
+    }
+    Storage {
+        id: datesArrStorage
     }
 
     /****************************************************************************/
@@ -121,15 +129,15 @@ App {
             }
         }
 
-//        NavigationItem {
-//            id: adminPageItem
-//            title: qsTr("Quyền Admin")
-//            icon: IconType.shoppingcart
-//            showItem: User.userRole == 0
-//            NavigationStack {
-//                initialPage: CartPage { }
-//            }
-//        }
+        NavigationItem {
+            id: adminPageItem
+            title: qsTr("Quyền Admin")
+            icon: IconType.shield
+            showItem: User.userRole == 0
+            NavigationStack {
+                initialPage: AdminPage { }
+            }
+        }
 
     }
 
@@ -152,5 +160,6 @@ App {
         accountStorage.clearAll()
         orderStorage.clearAll()
         orderIDCountStorage.clearAll()
+        revenueStorage.clearAll()
     }
 }

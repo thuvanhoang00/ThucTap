@@ -65,6 +65,7 @@ Page {
                     loginSucceeded()
                 }
                 else{
+                    dangNhapLoi.open()
                     loginFailed()
                 }
             }
@@ -72,6 +73,22 @@ Page {
     }
     Constants {
         id: constants
+    }
+    Dialog {
+        id: dangNhapLoi
+        title: "Thông báo"
+        positiveActionLabel: "Đồng ý"
+        negativeAction: false
+        onAccepted: {
+            close()
+        }
+        AppText {
+            text: "Sai tài khoản hoặc mật khẩu!"
+            anchors.centerIn: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: AppText.AlignHCenter
+        }
+
     }
 }
 

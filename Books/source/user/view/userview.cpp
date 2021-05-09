@@ -76,3 +76,14 @@ void UserView::logout()
     setLoginState(false);
     UserController::getInstace()->logoutController();
 }
+
+void UserView::deleteUser(QString name)
+{
+    UserController::getInstace()->deleteUser(name);
+}
+
+QStringList UserView::getAllUsers()
+{
+    QStringList ret = UserController::getInstace()->getUsersFromDB();
+    return ret;
+}

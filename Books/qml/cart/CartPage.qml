@@ -205,6 +205,35 @@ Page {
             accountOrderIDs.push(orderID)
             accountStorage.setValue(userName, accountOrderIDs)
 
+
+            var tg = new Date().toISOString().slice(0,10);
+            var entry = revenueStorage.getValue(tg)
+            var solg = 0
+            var doanhthu = 0
+            var days = datesArrStorage.getValue("ngay")
+            if(entry == undefined){
+                solg = 0
+                doanhthu = 0
+                if(days == undefined){
+                    days = []
+                }
+                days.push(tg)
+            } else {
+                solg = entry["soluong"]
+                doanhthu = entry["doanhthu"]
+            }
+
+            solg += 1
+            doanhthu += parseInt(root.totalPrice)
+            var arr = {"soluong": solg, "doanhthu": doanhthu}
+//            var newEntry = {tg : arr }
+            datesArrStorage.clearValue("ngay")
+            datesArrStorage.setValue("ngay", days)
+            revenueStorage.clearValue(tg)
+            revenueStorage.setValue(tg, arr)
+            console.log("ngay dat mua: " + tg + " chi tiet: " + arr)
+
+
             storage.clearValue("favorites")
             storage.clearValue("TongTien")
             root.totalCartItem = 0

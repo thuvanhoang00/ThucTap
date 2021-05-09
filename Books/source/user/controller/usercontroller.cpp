@@ -76,6 +76,17 @@ void UserController::logoutController()
     User::getInstance()->setUserRole(Role::CUSTOMER);
 }
 
+void UserController::deleteUser(QString name)
+{
+    DatabaseController::getInstance()->deleteUser(name);
+}
+
+QStringList UserController::getUsersFromDB()
+{
+    QStringList ret = DatabaseController::getInstance()->getAllUsers();
+    return ret;
+}
+
 UserController::UserController()
 {
 

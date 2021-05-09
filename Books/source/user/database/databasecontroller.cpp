@@ -130,6 +130,26 @@ bool DatabaseController::isUserPhoneExist(QString phone)
     return ret;
 }
 
+bool DatabaseController::deleteUser(QString name)
+{
+    bool ret = false;
+
+    QSqlQuery checkQuery;
+    checkQuery.prepare("DELETE FROM users WHERE username = (:name)");
+    checkQuery.bindValue(":name", name);
+
+    if(checkQuery.exec()){
+        if(checkQuery.next()){
+            ret = true;
+        }
+    }
+    else {
+        qDebug() << QString("Khong tim thay username = %1").arg(name);
+    }
+
+    return ret;
+}
+
 bool DatabaseController::addUser(QString name, QString email, QString phone, QString password, Role role)
 {
     bool success = false;
@@ -149,6 +169,23 @@ bool DatabaseController::addUser(QString name, QString email, QString phone, QSt
         qDebug() << "Add user failed! " << addQuery.lastError();
     }
     return success;
+}
+
+QStringList DatabaseController::getAllUsers()
+{
+    QStringList ret;
+
+    QSqlQuery query("SELECT * FROM users");
+    int idName = query.record().indexOf("username");
+    int idRole = query.record().indexOf("role");
+    while(query.next()){
+        QString name = query.value(idName).toString();
+        int role = query.value(idRole).toInt();
+        if(name != "" && role == 1)
+            ret.push_back(name);
+        qDebug() << "---" << name;
+    }
+    return ret;
 }
 
 //QString DatabaseController::getRole(QString name)
